@@ -6,12 +6,11 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class DocsService {
 
-  private docsUrl = 'http://spanielovasvj.cz/api/news';  // URL to web api
+  private docsUrl = 'http://spanielovasvj.cz/api/documentation.php';  // URL to web api
 
   constructor(private http: Http) { }
 
   getDocs() {
-    
     return this.http.get(this.docsUrl)
                .toPromise()
                .then(response => response)

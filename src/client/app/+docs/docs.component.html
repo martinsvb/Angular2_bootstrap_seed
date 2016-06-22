@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>API documentation</h1>
+    </div>
+</div>
+
+<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default" *ngFor='let namespace of namespaces'>
+    <span *ngFor='let namespaceClass of docs[namespace]'>
+        <div class="panel-heading" role="tab" id="heading_{{namespace}}">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{namespace}}" aria-expanded="false" [attr.aria-controls]="namespace">
+                    <span class="label label-default">{{namespaceClass.className}}</span> {{namespace}}
+                </a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse in" id="{{namespace}}" role="tabpanel" [attr.aria-labelledby]="'heading_'+namespace">
+          <p *ngFor='let method of namespaceClass.methods'>{{method.name}} <span *ngIf='method.params' *ngFor='let param of method.params'>{{param}}, </span></p>
+        </div>
+    </span>
+  </div>
+</div>

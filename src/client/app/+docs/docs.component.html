@@ -1,15 +1,21 @@
-<div class="row">
-    <div class="col-md-12">
-        <h1>API documentation</h1>
-    </div>
+<div class="content">
+  <div class="row">
+      <div class="col-md-12">
+          <h1>API documentation</h1>
+      </div>
+  </div>
+  
+  <accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
+    <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
+      <div accordion-heading>
+        <span class="label label-default">{{namespaceClass.className}}</span> {{namespace}}
+      </div>
+      <div class="card card-block">
+      <p *ngIf='namespaceClass.parent'>Parent: {{namespaceClass.parent}}</p>
+      <p *ngFor='let method of namespaceClass.methods'>{{method.name}}
+      <span *ngIf='method.params'> (<span *ngFor='let param of method.params; let last=last'>{{param}}{{last ? '' : ', '}}</span>)</span>
+      </p>
+      </div>
+    </accordion-group>
+  </accordion>
 </div>
-
-<accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
-  <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
-    <div accordion-heading>
-      <span class="label label-default">{{namespaceClass.className}}</span> {{namespace}}
-    </div>
-    <p *ngIf='namespaceClass.parent'>Parent: {{namespaceClass.parent}}</p>
-    <p *ngFor='let method of namespaceClass.methods'>{{method.name}}<span *ngIf='method.params'> (<span *ngFor='let param of method.params'>{{param}}, </span>)</span></p>
-  </accordion-group>
-</accordion>

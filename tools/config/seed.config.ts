@@ -263,7 +263,11 @@ export class SeedConfig {
     { src: 'zone.js/dist/zone.js', inject: 'libs' },
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
+    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'jquery/dist/jquery.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'tether/dist/js/tether.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
   ];
 
   /**
@@ -315,9 +319,17 @@ export class SeedConfig {
       '@angular/platform-browser-dynamic': `${this.NPM_BASE}@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js`,
       'rxjs/*': `${this.NPM_BASE}rxjs/*`,
       'app/*': `/app/*`,
-      '*': `${this.NPM_BASE}*`
+      '*': `${this.NPM_BASE}*`,
+      'moment': `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
     },
     packages: {
+      app: {
+          format: 'register',
+          defaultExtension: 'js'
+      },
+      map: {
+        moment: `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
+      },
       rxjs: { defaultExtension: false }
     }
   };
@@ -341,7 +353,8 @@ export class SeedConfig {
     ],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
-      '*': 'node_modules/*'
+      '*': 'node_modules/*',
+      'moment': `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
     },
     packages: {
       '@angular/core': {

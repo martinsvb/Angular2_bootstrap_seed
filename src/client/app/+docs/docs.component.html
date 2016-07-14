@@ -1,4 +1,4 @@
-<div class="content">
+<div class="docs container-fluid">
   <div class="row">
       <div class="col-md-12">
           <h1>API documentation</h1>
@@ -8,14 +8,22 @@
   <accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
     <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
       <div accordion-heading>
-        <span class="label label-default">{{namespaceClass.className}}</span> {{namespace}}
+        <pre *ngIf='namespaceClass.comment' class="classHeader">{{namespaceClass.comment}}</pre>
+        <p><span class="classHeader">ClassName:</span> <span class="label label-default">{{namespaceClass.className}}</span></p>
+        <pre class="classHeader">Namespace: {{namespace}}</pre>
       </div>
-      <div class="card card-block">
-      <p *ngIf='namespaceClass.parent'>Parent: {{namespaceClass.parent}}</p>
-      <p *ngFor='let method of namespaceClass.methods'>{{method.name}}
-      <span *ngIf='method.params'> (<span *ngFor='let param of method.params; let last=last'>{{param}}{{last ? '' : ', '}}</span>)</span>
-      </p>
-      </div>
+        <div *ngIf="namespaceClass.parent" class="classDescription">
+          <h5>Parent: <span class="label label-default">{{namespaceClass.parent}}</span></h5>
+        </div>
+        <div *ngIf="namespaceClass.methods" class="classDescription">
+          <h5>Methods:</h5>
+          <ul>
+            <li *ngFor='let method of namespaceClass.methods' class="font-italic">{{method.name}}
+            (<span *ngIf='method.params'><span *ngFor='let param of method.params; let last=last'>{{param}}{{last ? '' : ', '}}</span></span>)
+            </li>
+          </ul>
+        </div>
     </accordion-group>
+    <hr class="divider"/>
   </accordion>
 </div>

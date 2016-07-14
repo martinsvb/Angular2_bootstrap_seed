@@ -8,18 +8,16 @@ import { ACCORDION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'sd-docs',
   directives: [ACCORDION_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
   templateUrl: 'docs.component.html',
-  providers: [
-    DocsService
-  ]
+  providers: [DocsService]
 })
 
 export class DocsComponent {
   docs: any;
   error: any;
   namespaces: any;
-  
+
   constructor(private DocsService: DocsService) { }
-  
+
   getDocs() {
     this.DocsService
         .getDocs()
@@ -29,7 +27,7 @@ export class DocsComponent {
         })
         .catch(error => this.error = error);
   }
-  
+
   ngOnInit() {
     this.getDocs();
   }

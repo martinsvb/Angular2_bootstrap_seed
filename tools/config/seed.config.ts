@@ -264,10 +264,11 @@ export class SeedConfig {
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'jquery/dist/jquery.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'tether/dist/js/tether.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
+    { src: 'jquery/dist/jquery.min.js', inject: 'libs' },
+    { src: 'tether/dist/js/tether.min.js', inject: 'libs' },
+    { src: 'ng2-bootstrap/node_modules/moment/min/moment-with-locales.min.js', inject: 'libs' },
+    { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
+    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' }
   ];
 
   /**
@@ -353,8 +354,7 @@ export class SeedConfig {
     ],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
-      '*': 'node_modules/*',
-      'moment': `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
+      '*': 'node_modules/*'
     },
     packages: {
       '@angular/core': {

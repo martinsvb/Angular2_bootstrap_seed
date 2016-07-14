@@ -4,7 +4,15 @@
           <h1>API documentation</h1>
       </div>
   </div>
-  
+
+  <alert *ngFor="let alert of alerts;let i = index" [type]="alert.type" dismissible="true" (close)="closeAlert(i)">
+    {{ alert?.msg }}
+  </alert>
+    
+  <alert dismissOnTimeout="3000">This alert will dismiss in 3s</alert>
+    
+  <button type="button" class='btn btn-primary' (click)="addAlert()">Add Alert</button>
+
   <accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
     <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
       <div accordion-heading>

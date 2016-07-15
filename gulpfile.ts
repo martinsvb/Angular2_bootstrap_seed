@@ -73,6 +73,16 @@ gulp.task('build.prod.fast', (done: any) =>
 gulp.task('server.copy', (done: any) =>
   gulp.src('./server/*')
       .pipe(gulp.dest('./dist/prod'))
+);
+
+// --------------
+// Copy ckeditor to prod folder.
+gulp.task('ckeditor.copy', (done: any) =>
+  gulp.src([
+    './node_modules/ng2-ckeditor/lib/**/*',
+    '!./node_modules/ng2-ckeditor/lib/CKEditor.js',
+    '!./node_modules/ng2-ckeditor/lib/CKEditor.js.map'
+  ]).pipe(gulp.dest('./dist/prod/js'))
 ); 
 
 // --------------

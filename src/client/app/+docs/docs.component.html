@@ -16,12 +16,15 @@
   <accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
     <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
       <div accordion-heading>
-        <pre *ngIf='namespaceClass.comment' class="classHeader">{{namespaceClass.comment}}</pre>
         <p><span class="classHeader">ClassName:</span> <span class="label label-default">{{namespaceClass.className}}</span></p>
         <pre class="classHeader">Namespace: {{namespace}}</pre>
       </div>
         <div *ngIf="namespaceClass.parent" class="classDescription">
           <h5>Parent: <span class="label label-default">{{namespaceClass.parent}}</span></h5>
+        </div>
+        <div *ngIf='namespaceClass.comment'>
+          <h5>Decription:</h5>
+          <pre class="classHeader">{{namespaceClass.comment}}</pre>
         </div>
         <div *ngIf="namespaceClass.methods" class="classDescription">
           <h5>Methods:</h5>

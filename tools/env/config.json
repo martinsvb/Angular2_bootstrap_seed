@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "API": "https://demo.com"
+  },
+  "prod": {
+    "API": "https://angular2-bootstrap-seed.herokuapp.com/"
+  },
+  "staging": {
+    "API": "https://staging.com"
+  }
+}

@@ -51,7 +51,29 @@ gulp.task('build.prod', (done: any) =>
               'build.bundles',
               'build.bundles.app',
               'build.index.prod',
+              'server.copy',
               done));
+
+// --------------
+// Build prod. fast without linting
+gulp.task('build.prod.fast', (done: any) =>
+  runSequence('clean.prod',
+              'build.assets.prod',
+              'build.html_css',
+              'copy.js.prod',
+              'build.js.prod',
+              'build.bundles',
+              'build.bundles.app',
+              'build.index.prod',
+              'server.copy',
+              done));
+
+// --------------
+// Copy server to prod folder.
+gulp.task('server.copy', (done: any) =>
+  gulp.src('./server/*')
+      .pipe(gulp.dest('./dist/prod'))
+); 
 
 // --------------
 // Build test.
@@ -105,6 +127,14 @@ gulp.task('serve.e2e', (done: any) =>
 // Serve prod
 gulp.task('serve.prod', (done: any) =>
   runSequence('build.prod',
+              'server.prod',
+              done));
+
+
+// --------------
+// Serve prod
+gulp.task('serve.prod.fast', (done: any) =>
+  runSequence('build.prod.fast',
               'server.prod',
               done));
 

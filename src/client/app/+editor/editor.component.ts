@@ -1,12 +1,20 @@
-import {Component} from '@angular/core';
-import {CKEditor} from 'ng2-ckeditor';
+import {Component, ElementRef, Inject} from '@angular/core';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'sd-editor',
-  directives: [CKEditor],
   templateUrl: 'editor.component.html'
 })
 
 export class EditorComponent {
-  ckeditorContent = `<p>My HTML</p>`;
+  elementRef: ElementRef;
+
+  constructor(@Inject(ElementRef) elementRef: ElementRef) {
+      this.elementRef = elementRef;
+  }
+
+  ngOnInit() {
+      jQuery(this.elementRef.nativeElement).find('#summernote').summernote();
+  }
 }

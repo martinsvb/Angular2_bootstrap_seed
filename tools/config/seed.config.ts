@@ -267,8 +267,9 @@ export class SeedConfig {
     { src: 'jquery/dist/jquery.min.js', inject: 'libs' },
     { src: 'tether/dist/js/tether.min.js', inject: 'libs' },
     { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
-    { src: 'ng2-bootstrap/node_modules/moment/min/moment-with-locales.min.js', inject: 'libs' },
-    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' }
+    { src: 'moment/min/moment-with-locales.min.js', inject: 'libs' },
+    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' },
+    { src: 'summernote/dist/summernote.min.js', inject: 'libs' }
   ];
 
   /**

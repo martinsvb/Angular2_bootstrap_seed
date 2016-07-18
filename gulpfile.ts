@@ -1,13 +1,14 @@
 import * as gulp from 'gulp';
 import * as runSequence from 'run-sequence';
+import * as gulpLoadPlugins from 'gulp-load-plugins';
 
 import { PROJECT_TASKS_DIR, SEED_TASKS_DIR } from './tools/config';
 import { loadTasks } from './tools/utils';
 
-
 loadTasks(SEED_TASKS_DIR);
 loadTasks(PROJECT_TASKS_DIR);
 
+const plugins = <any>gulpLoadPlugins();
 
 // --------------
 // Build dev.
@@ -19,6 +20,9 @@ gulp.task('build.dev', (done: any) =>
               'build.html_css',
               'build.js.dev',
               'build.index.dev',
+              'font-awesome.copy',
+              'summernote',
+              
               done));
 
 // --------------
@@ -36,6 +40,7 @@ gulp.task('build.e2e', (done: any) =>
               'build.assets.dev',
               'build.js.e2e',
               'build.index.dev',
+              'summernoteCssDev',
               done));
 
 // --------------
@@ -52,6 +57,9 @@ gulp.task('build.prod', (done: any) =>
               'build.bundles.app',
               'build.index.prod',
               'server.copy',
+              'font-awesome.copy',
+              'summernote',
+              'summernoteCssProd',
               done));
 
 // --------------
@@ -66,6 +74,9 @@ gulp.task('build.prod.fast', (done: any) =>
               'build.bundles.app',
               'build.index.prod',
               'server.copy',
+              'font-awesome.copy',
+              'summernote',
+              'summernoteCssProd',
               done));
 
 // --------------
@@ -76,14 +87,53 @@ gulp.task('server.copy', (done: any) =>
 );
 
 // --------------
-// Copy ckeditor to prod folder.
-gulp.task('ckeditor.copy', (done: any) =>
+// Copy font-awesome to prod folder.
+gulp.task('font-awesome.copy', (done: any) =>
   gulp.src([
-    './node_modules/ng2-ckeditor/lib/**/*',
-    '!./node_modules/ng2-ckeditor/lib/CKEditor.js',
-    '!./node_modules/ng2-ckeditor/lib/CKEditor.js.map'
-  ]).pipe(gulp.dest('./dist/prod/js'))
-); 
+    './node_modules/font-awesome/fonts/*'
+  ])
+  .pipe(gulp.dest('./dist/dev/assets/fonts'))
+  .pipe(gulp.dest('./dist/prod/assets/fonts'))
+);
+
+// --------------
+// Deploy summernote.
+gulp.task('summernote', (done: any) => {
+  gulp.src([
+    './node_modules/summernote/dist/font/*'
+  ])
+  .pipe(gulp.dest('./dist/dev/assets/fonts'))
+  .pipe(gulp.dest('./dist/prod/assets/fonts'));
+
+  gulp.src([
+    './node_modules/summernote/dist/summernote.min.js'
+  ])
+  .pipe(gulp.dest('./dist/dev/js'))
+  .pipe(gulp.dest('./dist/prod/js'));
+
+  return gulp.src([
+    './node_modules/summernote/dist/summernote.css'
+  ])
+  .pipe(plugins.replace('url("font', 'url("../assets/fonts'))
+  .pipe(gulp.dest('./dist/dev/css'))
+  .pipe(gulp.dest('./dist/prod/css'));
+});
+
+// --------------
+// Merge summernote CSS to main.css prod.
+gulp.task('summernoteCssProd', (done: any) => 
+  gulp.src('./dist/prod/css/*.css')
+  .pipe(plugins.concatCss('main.css'))
+  .pipe(gulp.dest('./dist/prod/css'))
+);
+
+// --------------
+// Merge summernote CSS to main.css dev.
+gulp.task('summernoteCssDev', (done: any) => 
+  gulp.src('./dist/dev/css/*.css')
+  .pipe(plugins.concatCss('main.css'))
+  .pipe(gulp.dest('./dist/dev/css'))
+);
 
 // --------------
 // Build test.

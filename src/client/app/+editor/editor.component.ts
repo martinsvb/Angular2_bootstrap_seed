@@ -1,20 +1,19 @@
-import {Component, ElementRef, Inject} from '@angular/core';
-
-declare var jQuery:any;
+import {Component} from '@angular/core';
+import {Ng2SummernoteComponent} from './accessor.component';
 
 @Component({
   selector: 'sd-editor',
-  templateUrl: 'editor.component.html'
+  template: `
+  <div class="row">
+  <div class="col-md-6">
+  <ng2-summernote [(ngModel)]="data"></ng2-summernote>
+  </div>
+</div>
+  <p>data: {{data}}</p>
+  `,
+  directives: [Ng2SummernoteComponent]
 })
 
 export class EditorComponent {
-  elementRef: ElementRef;
-
-  constructor(@Inject(ElementRef) elementRef: ElementRef) {
-      this.elementRef = elementRef;
-  }
-
-  ngOnInit() {
-      jQuery(this.elementRef.nativeElement).find('#summernote').summernote();
-  }
+  data: any = 'EditorComponent';
 }

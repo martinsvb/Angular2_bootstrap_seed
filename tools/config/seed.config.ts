@@ -268,8 +268,7 @@ export class SeedConfig {
     { src: 'tether/dist/js/tether.min.js', inject: 'libs' },
     { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
     { src: 'moment/min/moment-with-locales.min.js', inject: 'libs' },
-    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' },
-    { src: 'summernote/dist/summernote.min.js', inject: 'libs' }
+    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' }
   ];
 
   /**
@@ -329,12 +328,8 @@ export class SeedConfig {
           format: 'register',
           defaultExtension: 'js'
       },
-      'ng2-ckeditor': {
-        format: 'cjs'
-      },
       map: {
-        moment: `${this.NPM_BASE}moment/min/moment-with-locales.min.js`,
-        'ng2-ckeditor': `${this.NPM_BASE}ng2-ckeditor/lib/CKEditor.js`
+        moment: `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
       },
       rxjs: { defaultExtension: false }
     }
@@ -359,7 +354,8 @@ export class SeedConfig {
     ],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
-      '*': 'node_modules/*'
+      '*': 'node_modules/*',
+      'moment': 'node_modules/moment/min/moment-with-locales.min.js'
     },
     packages: {
       '@angular/core': {

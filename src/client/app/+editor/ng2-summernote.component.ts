@@ -45,7 +45,7 @@ export class Ng2SummernoteComponent {
 
     @Output() change = new EventEmitter<any>();
 
-    private _config: SummernoteConfig;
+    private _config: any;
 
     private _value: any;
 
@@ -98,11 +98,9 @@ export class Ng2SummernoteComponent {
      * 
      * @return boolean variable, finally seted variable value
      */
-    private _setLogicVars(variable: any, defaultVal: boolean) {
-      if (!variable) variable = defaultVal;
-      if (variable === "true") variable = true;
-      else if (variable === "false") variable = false;
-      else variable = defaultVal;
+    private _setLogicVars(variable: any, defaultVal?: boolean) {
+      variable = typeof variable !== 'undefined' ? true : false; 
+      if (!variable && defaultVal) variable = defaultVal;
 
       return variable;
     }
@@ -114,14 +112,16 @@ export class Ng2SummernoteComponent {
         if (value) {
             this._value = value;
             
-            this.editable = this._setLogicVars(this.editable, true);
+            this.height = Number(this.height);
+
+            this.editable = this._setLogicVars(this.editable, false);
 
             this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US'
 
             this._config = {
-                height: Number(this.height) || 200,
-                minHeight: Number(this.minHeight) || 200,
-                maxHeight: Number(this.maxHeight) || 200,
+                height: this.height || 200,
+                minHeight: Number(this.minHeight) || this.height || 200,
+                maxHeight: Number(this.maxHeight) || this.height || 500,
                 placeholder: this.placeholder || 'Text...',
                 focus: this._setLogicVars(this.focus, false),
                 airMode: this._setLogicVars(this.airMode, false),

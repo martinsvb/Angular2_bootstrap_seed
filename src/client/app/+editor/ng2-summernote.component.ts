@@ -1,29 +1,22 @@
+// Imports
 import {
   Component,
   Input,
   Output,
   ElementRef,
-  ViewChild,
-  Inject,
-  Provider,
-  forwardRef,
   EventEmitter,
   NgZone,
-  Renderer
+  Provider,
+  Inject,
+  forwardRef
 } from '@angular/core';
-import {
-  NgControl,
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
-import {
-  SummernoteConfig
-} from './ng2-summernote.interface';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SummernoteConfig} from './ng2-summernote.interface';
 
-declare var jQuery: any;
+declare var $: any;
 
 // Control Value accessor provider
-const SUMMERNOTE_VALUE_ACCESSOR = new Provider(
+const NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR = new Provider(
   NG_VALUE_ACCESSOR,
   {
     useExisting: forwardRef(() => Ng2SummernoteComponent),
@@ -31,69 +24,139 @@ const SUMMERNOTE_VALUE_ACCESSOR = new Provider(
   }
 );
 
-const noop = () => {};
-
 @Component({
   selector: 'ng2-summernote',
-  providers: [SUMMERNOTE_VALUE_ACCESSOR],
-  template: `<div class="summernote">Text...</div>`
+  providers: [NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR],
+  template: `<div class="summernote"></div>`,
 })
 
 export class Ng2SummernoteComponent {
-  
-  elementRef: ElementRef;
-  @Input() config: SummernoteConfig;
-  @Output() change = new EventEmitter();
-  
-  // The internal data model
-  private _value: any = '';
-  
-  get value(): any { return this._value; };
-  set value(v) {
-    if (v !== this._value) {
-      this._value = v;
-      this._onChangeCallback(v);
+
+    @Input() height: number;
+    @Input() minHeight: number;
+    @Input() maxHeight: number;
+    @Input() placeholder: string;
+    @Input() focus: string;
+    @Input() airMode: string;
+    @Input() dialogsInBody: string;
+    @Input() editable: any;
+    @Input() lang: string;
+    @Input() disableResizeEditor: string;
+
+    @Output() change = new EventEmitter<any>();
+
+    private _config: SummernoteConfig;
+
+    private _value: any;
+
+    private _elementRef: ElementRef;
+    private _zone: NgZone;
+
+    constructor (@Inject(ElementRef) elementRef: ElementRef, zone: NgZone) {
+        this._elementRef = elementRef;
+        this._zone = zone;
     }
-  }
 
-  zone: any;
+    get value(): any { return this._value; };
+    @Input() set value(v) {
+        if (v !== this._value) {
+            this._value = v;
+            this._onChangeCallback(v);
+        }
+    }
 
-  constructor(@Inject(ElementRef) elementRef: ElementRef, zone: NgZone) {
-      this.elementRef = elementRef;
-  }
+    ngAfterViewInit () {}
 
-  /**
-   * On component view init
-   */
-  ngAfterViewInit() {
-    var config = this.config || {
-        height: 200,
-        minHeight: 200,
-        maxHeight: 0,
-        placeholder: Text,
-        focus: true,
-        airMode: false,
-        dialogsInBody: false,
-        callbacks: {}
-    };
+    /**
+     * Value update process
+     */
+    updateValue (value: any) {
+        this._zone.run(() => {
+            this._value = value;
+            
+            this.onChange(value);
+            this._onTouchedCallback();
+            this.change.emit(value);
+        });
+    }
 
-    jQuery(this.elementRef.nativeElement).find('.summernote').summernote(config);
-  }
+    ngOnDestroy () {}
 
-  /**
-   * Implements ControlValueAccessor
-   */
-  writeValue(value: any){
-    this._value = value;
-  }
-  onChange(_: any){}
-  onTouched(){}
-  registerOnChange(fn: any){this.onChange = fn;}
-  registerOnTouched(fn: any){this.onTouched = fn;}
-  _onChangeCallback(_: any){}
-  _onTouchedCallback(){}
+    private _imageUpload(obj: any) {
+        console.log(obj);
+    }
+
+    private _mediaDelete(obj: any) {
+        console.log(obj);
+    }
+
+    /**
+     * Set logical varibles from text input values
+     * 
+     * @param any variable, logic varible for setting
+     * @param boolean defaultValue, this value will be set if variable is not set
+     * 
+     * @return boolean variable, finally seted variable value
+     */
+    private _setLogicVars(variable: any, defaultVal: boolean) {
+      if (!variable) variable = defaultVal;
+      if (variable === "true") variable = true;
+      else if (variable === "false") variable = false;
+      else variable = defaultVal;
+
+      return variable;
+    }
+
+    /**
+     * Implements ControlValueAccessor
+     */
+    writeValue (value: any) {
+        if (value) {
+            this._value = value;
+            
+            this.editable = this._setLogicVars(this.editable, true);
+
+            this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US'
+
+            this._config = {
+                height: Number(this.height) || 200,
+                minHeight: Number(this.minHeight) || 200,
+                maxHeight: Number(this.maxHeight) || 200,
+                placeholder: this.placeholder || 'Text...',
+                focus: this._setLogicVars(this.focus, false),
+                airMode: this._setLogicVars(this.airMode, false),
+                dialogsInBody: this._setLogicVars(this.dialogsInBody, false),
+                editable: this.editable,
+                lang: this.lang,
+                disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false),
+                callbacks: {
+                    onChange: (evt: any) => {
+                        this.updateValue(evt);
+                    },
+                    onInit: (evt: any) => {},
+                    onImageUpload: (files: string) => {
+                        this._imageUpload({files: files, editable: this.editable});
+                    },
+                    onMediaDelete: (target: [any]) => {
+                        let removedMedia: any = {attrs: {}, tagName: {}};
+                        removedMedia.tagName = target[0].tagName;
+                        let attributes: any = target[0].attributes;
+                        for (let i = 0; i < target[0].attributes.length; i++) {
+                            removedMedia.attrs[attributes.name] = attributes[i].value;
+                        }
+                        this._mediaDelete({target: removedMedia});
+                    }
+                }
+            };
+            console.log(this._config);
+            $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);
+            $(this._elementRef.nativeElement).find('.summernote').summernote('code', value);
+        }
+    }
+    onChange (_: any) {}
+    onTouched () {}
+    registerOnChange (fn: any) { this.onChange = fn; }
+    registerOnTouched (fn: any) { this.onTouched = fn; }
+    _onChangeCallback (_: any) {}
+    _onTouchedCallback () {}
 }
-
-// element.summernote('code')
-// element.summernote('isEmpty')
-// element.append(value);

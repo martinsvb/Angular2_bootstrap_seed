@@ -22,7 +22,6 @@ gulp.task('build.dev', (done: any) =>
               'build.index.dev',
               'font-awesome.copy',
               'summernote',
-              
               done));
 
 // --------------
@@ -106,8 +105,13 @@ gulp.task('summernote', (done: any) => {
   .pipe(gulp.dest('./dist/prod/assets/fonts'));
 
   gulp.src([
-    './node_modules/summernote/dist/summernote.min.js'
+    './node_modules/summernote/dist/summernote.min.js',
+    './node_modules/summernote/dist/lang/summernote-cs-CZ.min.js',
+    './node_modules/summernote/dist/lang/summernote-sk-SK.min.js',
+    './node_modules/summernote/dist/lang/summernote-hu-HU.min.js',
+    './node_modules/summernote/dist/lang/summernote-pl-PL.min.js'
   ])
+  .pipe(plugins.concat('summernote.js'))
   .pipe(gulp.dest('./dist/dev/js'))
   .pipe(gulp.dest('./dist/prod/js'));
 

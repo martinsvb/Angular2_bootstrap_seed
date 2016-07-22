@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
 import {FORM_DIRECTIVES} from '@angular/forms';
-
 import * as moment from 'moment';
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
+  moduleId: module.id,
   selector: 'sd-datepicker',
   templateUrl: 'datepicker.component.html',
   directives: [DATEPICKER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES]

@@ -22,6 +22,7 @@ gulp.task('build.dev', (done: any) =>
               'build.index.dev',
               'font-awesome.copy',
               'summernote',
+              'mergeCssDev',
               done));
 
 // --------------
@@ -39,7 +40,6 @@ gulp.task('build.e2e', (done: any) =>
               'build.assets.dev',
               'build.js.e2e',
               'build.index.dev',
-              'summernoteCssDev',
               done));
 
 // --------------
@@ -132,8 +132,8 @@ gulp.task('summernoteCssProd', (done: any) =>
 );
 
 // --------------
-// Merge summernote CSS to main.css dev.
-gulp.task('summernoteCssDev', (done: any) => 
+// Merge dev CSS to main.css dev.
+gulp.task('mergeCssDev', (done: any) => 
   gulp.src('./dist/dev/css/*.css')
   .pipe(plugins.concatCss('main.css'))
   .pipe(gulp.dest('./dist/dev/css'))

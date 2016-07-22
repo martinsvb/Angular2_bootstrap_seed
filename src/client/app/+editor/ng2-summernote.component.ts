@@ -1,4 +1,3 @@
-// Imports
 import {
   Component,
   Input,
@@ -42,6 +41,7 @@ export class Ng2SummernoteComponent {
     @Input() editable: any;
     @Input() lang: string;
     @Input() disableResizeEditor: string;
+    @Input() config: any;
 
     @Output() change = new EventEmitter<any>();
 
@@ -82,11 +82,33 @@ export class Ng2SummernoteComponent {
 
     ngOnDestroy () {}
 
-    private _imageUpload(obj: any) {
-        console.log(obj);
+    private _imageUpload(dataUpload: any) {
+        if (dataUpload.editable) {
+            let data = new FormData();
+            data.append("file", dataUpload.files[0]);
+            data.append("subject", "test_company");
+            data.append("type", "news");
+            $.post({
+                data: data,
+                type: "POST",
+                url: "http://spanielovasvj.cz/api/upload",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (resp: any) => {
+                    console.log("success");
+                    console.log(resp);
+                },
+                error: (err: any) => {
+                    console.log("error");
+                    console.log(err);
+                }
+            });
+        }
     }
 
     private _mediaDelete(obj: any) {
+        console.log('delete media');
         console.log(obj);
     }
 
@@ -114,7 +136,7 @@ export class Ng2SummernoteComponent {
             
             this.height = Number(this.height);
 
-            this.editable = this._setLogicVars(this.editable, false);
+            this.editable = this._setLogicVars(this.editable, true);
 
             this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US'
 
@@ -148,7 +170,7 @@ export class Ng2SummernoteComponent {
                     }
                 }
             };
-            console.log(this._config);
+            
             $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);
             $(this._elementRef.nativeElement).find('.summernote').summernote('code', value);
         }

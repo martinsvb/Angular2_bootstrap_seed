@@ -10,7 +10,8 @@ import {
   forwardRef
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SummernoteConfig} from './ng2-summernote.interface';
+
+import { appConfig } from '../shared/index';
 
 declare var $: any;
 
@@ -25,7 +26,7 @@ const NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR = new Provider(
 
 @Component({
   selector: 'ng2-summernote',
-  providers: [NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR],
+  providers: [NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR, appConfig],
   template: `<div class="summernote"></div>`,
 })
 
@@ -35,12 +36,13 @@ export class Ng2SummernoteComponent {
     @Input() minHeight: number;
     @Input() maxHeight: number;
     @Input() placeholder: string;
-    @Input() focus: string;
-    @Input() airMode: string;
+    @Input() focus: boolean;
+    @Input() airMode: boolean;
     @Input() dialogsInBody: string;
-    @Input() editable: any;
+    @Input() editable: boolean;
     @Input() lang: string;
     @Input() disableResizeEditor: string;
+    @Input() serverImgUp: boolean;
     @Input() config: any;
 
     @Output() change = new EventEmitter<any>();
@@ -49,13 +51,11 @@ export class Ng2SummernoteComponent {
 
     private _value: any;
 
-    private _elementRef: ElementRef;
-    private _zone: NgZone;
-
-    constructor (@Inject(ElementRef) elementRef: ElementRef, zone: NgZone) {
-        this._elementRef = elementRef;
-        this._zone = zone;
-    }
+    constructor (
+        @Inject(ElementRef) private _elementRef: ElementRef,
+        private _zone: NgZone,
+        private _appConfig: appConfig
+    ) {}
 
     get value(): any { return this._value; };
     @Input() set value(v) {
@@ -86,18 +86,18 @@ export class Ng2SummernoteComponent {
         if (dataUpload.editable) {
             let data = new FormData();
             data.append("file", dataUpload.files[0]);
-            data.append("subject", "test_company");
+            data.append("company", "test_company");
             data.append("type", "news");
             $.post({
                 data: data,
                 type: "POST",
-                url: "http://spanielovasvj.cz/api/upload",
+                url: this._appConfig.hostUpload,
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: (resp: any) => {
-                    console.log("success");
-                    console.log(resp);
+                success: (uploadedImg: any) => {
+                    let insertImg = $('<img style="width: 100%;" src="'+uploadedImg[0]+'" />');
+                    $(this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
                 },
                 error: (err: any) => {
                     console.log("error");
@@ -107,9 +107,22 @@ export class Ng2SummernoteComponent {
         }
     }
 
-    private _mediaDelete(obj: any) {
-        console.log('delete media');
-        console.log(obj);
+    private _mediaDelete(fileUrl: string) {
+        let data = new FormData();
+        data.append("file", fileUrl);
+        $.ajax({
+            url: this._appConfig.hostUpload,
+            data: data,
+            type: 'DELETE',
+            success: (deletedImg: any) => {
+                console.log("deleted");
+                console.log(deletedImg);
+            },
+            error: (err: any) => {
+                console.log("error");
+                console.log(err);
+            }
+        });
     }
 
     /**
@@ -140,7 +153,7 @@ export class Ng2SummernoteComponent {
 
             this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US'
 
-            this._config = {
+            this._config = this.config || {
                 height: this.height || 200,
                 minHeight: Number(this.minHeight) || this.height || 200,
                 maxHeight: Number(this.maxHeight) || this.height || 500,
@@ -155,22 +168,28 @@ export class Ng2SummernoteComponent {
                     onChange: (evt: any) => {
                         this.updateValue(evt);
                     },
-                    onInit: (evt: any) => {},
+                    onInit: (evt: any) => {}
+                }
+            };
+            
+            if (typeof this.serverImgUp !== 'undefined') {
+                this._config.callbacks = {
                     onImageUpload: (files: string) => {
                         this._imageUpload({files: files, editable: this.editable});
                     },
                     onMediaDelete: (target: [any]) => {
-                        let removedMedia: any = {attrs: {}, tagName: {}};
-                        removedMedia.tagName = target[0].tagName;
+                        let fileUrl: string;
                         let attributes: any = target[0].attributes;
-                        for (let i = 0; i < target[0].attributes.length; i++) {
-                            removedMedia.attrs[attributes.name] = attributes[i].value;
+                        for (let i = 0; i < attributes.length; i++) {
+                            if (attributes[i].name == "src") {
+                                fileUrl = attributes[i].value;
+                            }
                         }
-                        this._mediaDelete({target: removedMedia});
+                        this._mediaDelete(fileUrl);
                     }
                 }
-            };
-            
+            }
+
             $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);
             $(this._elementRef.nativeElement).find('.summernote').summernote('code', value);
         }

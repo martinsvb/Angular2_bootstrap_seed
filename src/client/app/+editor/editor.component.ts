@@ -7,7 +7,7 @@ import {Ng2SummernoteComponent} from './ng2-summernote.component';
   template: `
   <div class="row">
     <div class="col-md-6">
-      <ng2-summernote [(ngModel)]="data" lang="cs-CZ"></ng2-summernote>
+      <ng2-summernote [(ngModel)]="data" lang="cs-CZ" serverImgUp></ng2-summernote>
     </div>
   </div>
   <div class="row">

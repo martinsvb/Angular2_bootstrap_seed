@@ -1,17 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+
+import { appConfig } from '../shared/index';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
+@Component({
+  providers: [appConfig]
+})
 export class DocsService {
 
-  private docsUrl = 'http://spanielovasvj.cz/api/documentation.php';  // URL to web api
+  private docsUrl = this._appConfig.hostUrl + '/documentation.php';  // URL to web api
 
-  constructor(private http: Http) { }
+  constructor(
+    private _http: Http,
+    private _appConfig: appConfig
+  ) {}
 
   getDocs() {
-    return this.http.get(this.docsUrl)
+    return this._http.get(this.docsUrl)
                .toPromise()
                .then(response => response)
                .catch(this.handleError);

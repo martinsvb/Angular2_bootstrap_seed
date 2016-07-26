@@ -10,6 +10,9 @@ import {
   forwardRef
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Http, Headers, RequestOptions} from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
 
 import { appConfig } from '../shared/index';
 
@@ -54,6 +57,7 @@ export class Ng2SummernoteComponent {
     constructor (
         @Inject(ElementRef) private _elementRef: ElementRef,
         private _zone: NgZone,
+        private _http: Http,
         private _appConfig: appConfig
     ) {}
 
@@ -86,6 +90,7 @@ export class Ng2SummernoteComponent {
         if (dataUpload.editable) {
             let data = new FormData();
             data.append("file", dataUpload.files[0]);
+            data.append("action", "upload");
             data.append("company", "test_company");
             data.append("type", "news");
             $.post({
@@ -108,21 +113,21 @@ export class Ng2SummernoteComponent {
     }
 
     private _mediaDelete(fileUrl: string) {
-        let data = new FormData();
-        data.append("file", fileUrl);
-        $.ajax({
-            url: this._appConfig.hostUpload,
-            data: data,
-            type: 'DELETE',
-            success: (deletedImg: any) => {
-                console.log("deleted");
-                console.log(deletedImg);
-            },
-            error: (err: any) => {
-                console.log("error");
-                console.log(err);
-            }
+        let data: any = JSON.stringify({
+            action: "del",
+            file: fileUrl
         });
+
+        let headers = new Headers({
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({headers: headers});
+        
+        return this._http.post(this._appConfig.hostUpload, data, options)
+                .toPromise()
+                .then(response => response)
+                .catch((err: any) => Promise.reject(err.message || err));
     }
 
     /**
@@ -185,7 +190,16 @@ export class Ng2SummernoteComponent {
                                 fileUrl = attributes[i].value;
                             }
                         }
-                        this._mediaDelete(fileUrl);
+                        this._mediaDelete(fileUrl)
+                            .then((resp: any) => {
+                                console.log("success");
+                                console.log(resp);
+                            })
+                            .catch((error:any) => {
+                                console.log("err");
+                                let err = error.json();
+                                console.log(err);
+                            });
                     }
                 }
             }

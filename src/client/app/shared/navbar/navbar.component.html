@@ -1,7 +1,26 @@
-<nav>
-  <a [routerLink]="['/']">ABOUT</a> | 
-  <a [routerLink]="['/docs']">DOCS</a> | 
-  <a [routerLink]="['/buttons']">BUTTONS</a> | 
-  <a [routerLink]="['/datepicker']">DATEPICKER</a> | 
-  <a [routerLink]="['/editor']">EDITOR</a>
-</nav>
+<div class="row">
+  <div class="col-md-12">
+    <nav class="app-nav">
+      <a class="app-nav-link" title="{{ 'HOME' | translate }}" [routerLink]="['/']" [routerLinkActive]="['active-link']">
+        <i class="fa fa-home app-nav-link-ico" aria-hidden="true"></i>
+        <span class="app-nav-link-text">{{ 'HOME' | translate }}</span>
+      </a>
+      <a class="app-nav-link" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">
+        <i class="fa fa-book app-nav-link-ico" aria-hidden="true"></i>
+        <span class="app-nav-link-text">DOCS</span>
+      </a>
+      <a class="app-nav-link" title="buttons" [routerLink]="['/buttons']" [routerLinkActive]="['active-link']">
+        <i class="fa fa-hand-grab-o app-nav-link-ico" aria-hidden="true"></i>
+        <span class="app-nav-link-text">BUTTONS</span>
+      </a>
+      <a class="app-nav-link" title="datepicker" [routerLink]="['/datepicker']" [routerLinkActive]="['active-link']">
+        <i class="fa fa-calendar app-nav-link-ico" aria-hidden="true"></i>
+        <span class="app-nav-link-text">DATEPICKER</span>
+      </a>
+      <a class="app-nav-link" title="editor" [routerLink]="['/editor']" [routerLinkActive]="['active-link']">
+        <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i>
+        <span class="app-nav-link-text">EDITOR</span>
+      </a>
+    </nav>
+  </div>
+</div>

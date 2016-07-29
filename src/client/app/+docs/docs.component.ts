@@ -32,7 +32,6 @@ export class DocsComponent {
   }
 
   ngOnInit() {
-    console.info("DocsComponent loaded...");
     this.getDocs();
   }
 

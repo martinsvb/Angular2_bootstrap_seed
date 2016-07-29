@@ -268,7 +268,8 @@ export class SeedConfig {
     { src: 'tether/dist/js/tether.min.js', inject: 'libs' },
     { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
     { src: 'moment/min/moment-with-locales.min.js', inject: 'libs' },
-    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' }
+    { src: 'ng2-bootstrap/bundles/ng2-bootstrap.min.js', inject: 'libs' },
+    { src: 'ng2-translate/bundles/ng2-translate.js', inject: 'libs' }
   ];
 
   /**
@@ -327,12 +328,15 @@ export class SeedConfig {
       app: {
           format: 'register',
           defaultExtension: 'js'
-      },
-      map: {
-        moment: `${this.NPM_BASE}moment/min/moment-with-locales.min.js`
-      },
-      rxjs: { defaultExtension: false }
-    }
+      }
+    },
+    map: {
+      moment: `${this.NPM_BASE}moment/min/moment-with-locales.min.js`,
+      "ng2-summernote": `${this.NPM_BASE}ng2-summernote`,
+      "ng2-translate": `${this.NPM_BASE}ng2-translate`,
+      "rxjs": `${this.NPM_BASE}rxjs`
+    },
+    rxjs: { defaultExtension: false }
   };
 
   /**

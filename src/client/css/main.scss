@@ -106,6 +106,9 @@
 @import "../../../node_modules/font-awesome/scss/icons";
 @import "../../../node_modules/font-awesome/scss/screen-reader";
 
+// Custom mixins
+@import "./_mixins";
+
 // Main content styles
 @import "./content";
 

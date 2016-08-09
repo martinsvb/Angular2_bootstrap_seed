@@ -1,0 +1,5 @@
+@mixin app-shadow() {
+    -webkit-box-shadow: .2rem .2rem .3rem 0rem rgba(0, 0, 0, 0.4);
+    -moz-box-shadow:    .2rem .2rem .3rem 0rem rgba(0, 0, 0, 0.4);
+    box-shadow:         .2rem .2rem .3rem 0rem rgba(0, 0, 0, 0.4);
+}

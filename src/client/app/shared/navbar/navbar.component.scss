@@ -1,11 +1,10 @@
 .app-nav {
+    
     /** Mobile first */
     margin: 1rem 0 .5rem 0;
     &-link {
-        width: 3rem;
-        height: 3rem;
-        line-height: 2.9rem;
         display: inline-block;
+        line-height: 2.9rem;
         text-align: center;
         margin-right: .5rem;
         font-size: 1.2rem;
@@ -26,15 +25,22 @@
         }
     }
     
+    /** Only mobile */
+    @include media-breakpoint-down(md) {
+        &-link {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+
     /** Medium screens */
     @include media-breakpoint-up(md) {
         &-link {
-            padding: .4rem .8rem;
+            padding: .3rem .8rem;
             border-radius: .2rem;
             &-text {
                 display: inline-block;
                 padding: 0 .2rem;
-                border-radius: .2rem;
             }
         }
     }

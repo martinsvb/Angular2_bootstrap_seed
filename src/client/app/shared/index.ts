@@ -4,3 +4,4 @@
 export * from './navbar/index';
 export * from './appConfig/index';
 export * from './errorHandler/index';
+export * from './translation/index';

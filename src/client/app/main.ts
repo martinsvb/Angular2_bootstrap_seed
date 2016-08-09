@@ -1,8 +1,7 @@
 import { enableProdMode, PLATFORM_PIPES } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { disableDeprecatedForms, provideForms } from '@angular/forms/index';
-import {HTTP_PROVIDERS, Http} from '@angular/http';
-import {TRANSLATE_PROVIDERS, TranslatePipe, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import { HTTP_PROVIDERS, Http } from '@angular/http';
 
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
@@ -17,20 +16,12 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
  */
 bootstrap(AppComponent, [
   disableDeprecatedForms(),
-  provideForms(),
+  provideForms(),  
   APP_ROUTER_PROVIDERS,
   {
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
-  },
-  HTTP_PROVIDERS,
-  { 
-    provide: TranslateLoader,
-    useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
-    deps: [Http]
-  },
-  TRANSLATE_PROVIDERS,
-  {provide: PLATFORM_PIPES, useValue: TranslatePipe, multi: true}
+  }
 ]);
 
 // In order to start the Service Worker located at "./worker.js"

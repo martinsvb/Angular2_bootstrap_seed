@@ -1,0 +1,94 @@
+<div class="container">
+    
+    <div [hidden]="submitted">
+        <h1>{{ tr.addNew }}</h1>
+        <form *ngIf="active" (ngSubmit)="onSubmit()" #newForm="ngForm" novalidate>
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-6">
+                    <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="model.subject" #subject="ngModel" placeholder="{{ tr.subject }}" required />
+                    <div [hidden]="subject.valid || subject.pristine" class="alert alert-danger">
+                        {{ tr.subject }} {{ tr.is }}  {{ tr.required }}
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <ng2-uploader [(ngModel)]="image" [ngModelOptions]="{standalone: true}" single hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}" uploadLabel="{{ tr.upload }} {{ tr.image }}" delLabel="{{ tr.delete }} {{ tr.image }}"></ng2-uploader>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <ng2-summernote [(ngModel)]="appendix" [ngModelOptions]="{standalone: true}" height="200" lang="cs-CZ" serverImgUp hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}"></ng2-summernote>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <ng2-summernote [(ngModel)]="content" [ngModelOptions]="{standalone: true}" height="600" lang="cs-CZ" serverImgUp hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}"></ng2-summernote>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-6">
+                    <label for="gallery">{{ tr.gallery }}</label>
+                    <input type="text" class="form-control" id="gallery" name="gallery" [(ngModel)]="model.gallery" #gallery="ngModel" placeholder="{{ tr.gallery }}" />
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <label for="attachments">{{ tr.attachments }}</label>
+                    <input type="text" class="form-control" id="attachments" name="attachments" [(ngModel)]="model.attachments" #attachments="ngModel" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-default" [disabled]="!newForm.form.valid">{{ tr.submit }}</button>
+                    <button type="button" class="btn btn-default" (click)="addNew()">{{ tr.addNew }}</button>
+                </div>
+            </div>
+        </form>
+
+        <p>{{ image }}</p>
+    </div>
+
+    <div [hidden]="!submitted">
+        <h2>You submitted the following:</h2>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <label>{{ tr.subject }}</label>
+                    <p>{{ model.subject }}</p>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <label>{{ tr.image }}</label>
+                    <p>{{ model.image }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>{{ tr.appendix }}</label>
+                    <p>{{ model.appendix }}</p>
+                </div>
+
+                <div class="col-md-12">
+                    <label>{{ tr.content }}</label>
+                    <p>{{ model.content }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <label>{{ tr.gallery }}</label>
+                    <p>{{ model.gallery }}</p>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <label>{{ tr.attachments }}</label>
+                    <p>{{ model.attachments }}</p>
+                </div>
+            </div>
+        <br>
+        <button class="btn btn-default" (click)="submitted=false">Edit</button>
+    </div>
+</div>

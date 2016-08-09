@@ -1,26 +1,23 @@
-<div class="row">
-  <div class="col-md-12">
-    <nav class="app-nav">
-      <a class="app-nav-link" title="{{ 'HOME' | translate }}" [routerLink]="['/']" [routerLinkActive]="['active-link']">
-        <i class="fa fa-home app-nav-link-ico" aria-hidden="true"></i>
-        <span class="app-nav-link-text">{{ 'HOME' | translate }}</span>
-      </a>
-      <a class="app-nav-link" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">
-        <i class="fa fa-book app-nav-link-ico" aria-hidden="true"></i>
-        <span class="app-nav-link-text">DOCS</span>
-      </a>
-      <a class="app-nav-link" title="buttons" [routerLink]="['/buttons']" [routerLinkActive]="['active-link']">
-        <i class="fa fa-hand-grab-o app-nav-link-ico" aria-hidden="true"></i>
-        <span class="app-nav-link-text">BUTTONS</span>
-      </a>
-      <a class="app-nav-link" title="datepicker" [routerLink]="['/datepicker']" [routerLinkActive]="['active-link']">
-        <i class="fa fa-calendar app-nav-link-ico" aria-hidden="true"></i>
-        <span class="app-nav-link-text">DATEPICKER</span>
-      </a>
-      <a class="app-nav-link" title="editor" [routerLink]="['/editor']" [routerLinkActive]="['active-link']">
-        <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i>
-        <span class="app-nav-link-text">EDITOR</span>
-      </a>
-    </nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <nav class="app-nav">
+        <a class="app-nav-link" title="{{ tr.home | uppercase }}" [routerLink]="['/']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-home app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr.home | uppercase }}</span>
+        </a>
+        <a class="app-nav-link" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-book app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">DOCS</span>
+        </a>
+        <a class="app-nav-link" title="buttons" [routerLink]="['/buttons']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-hand-grab-o app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">BUTTONS</span>
+        </a>
+        <a class="app-nav-link" title="datepicker" [routerLink]="['/datepicker']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-calendar app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">DATEPICKER</span>
+        </a>
+        <a class="app-nav-link" title="{{ tr.news | uppercase }}" [routerLink]="['/news']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr.news | uppercase }}</span>
+        </a>
+      </nav>
+    </div>
   </div>
 </div>

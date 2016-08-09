@@ -4,14 +4,14 @@ import { HomeRoutes } from './+home/index';
 import { DocsRoutes } from './+docs/index';
 import { ButtonsRoutes } from './+buttons/index';
 import { DatepickerRoutes } from './+datepicker/index';
-import { EditorRoutes } from './+editor/index';
+import { NewsRoutes } from './+news/index';
 
 const routes: RouterConfig = [
   ...HomeRoutes,
   ...DocsRoutes,
   ...ButtonsRoutes,
   ...DatepickerRoutes,
-  ...EditorRoutes
+  ...NewsRoutes
 ];
 
 export const APP_ROUTER_PROVIDERS = [

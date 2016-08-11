@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { Ng2Uploader } from './ng2-uploader';
 import { appConfig } from '../shared/index';
-import { New } from './news.interface';
+import { NewModel } from './news.interface';
 import { TransHelper } from '../shared/translation/translation.component';
 
 @Component({
@@ -18,9 +18,11 @@ export class NewsComponent {
   hostUpload: string;
   uploadFolder: string;
   tr: any;
-  image: Array<string> = [];
   appendix: string = 'appendix';
   content: string = 'content';
+  image: Array<string> = [];
+  gallery: Array<string> = [];
+  attachments: Array<string> = [];
 
   constructor(
     private _appConfig: appConfig,
@@ -31,13 +33,13 @@ export class NewsComponent {
     this.tr = _TransHelper.getTranslation();
   }
 
-  model: New = {
+  model: NewModel = {
     subject: '',
     appendix: this.appendix,
     content: this.content,
     image: this.image,
-    gallery: '',
-    attachments: ''
+    gallery: this.gallery,
+    attachments: this.attachments
   };
   
   submitted = false;
@@ -47,7 +49,9 @@ export class NewsComponent {
 
     this.model.appendix = this.appendix;
     this.model.content = this.content;
-    this.model.image = [];
+    this.model.image = this.image;
+    this.model.gallery = this.gallery;
+    this.model.attachments = this.attachments;
   }
 
   // Reset the form with a new hero AND restore 'pristine' class state
@@ -59,14 +63,15 @@ export class NewsComponent {
   addNew() {
     this.appendix = 'appendix';
     this.content = 'content';
+    this.image = this.gallery = this.attachments = [];
 
     this.model = {
       subject: '',
       appendix: this.appendix,
       content: this.content,
       image: this.image,
-      gallery: '',
-      attachments: ''
+      gallery: this.gallery,
+      attachments: this.attachments
     };
     
     this.active = false;

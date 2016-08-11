@@ -4,21 +4,24 @@
         <h1>{{ tr.addNew }}</h1>
         <form *ngIf="active" (ngSubmit)="onSubmit()" #newForm="ngForm" novalidate>
             <div class="form-group row">
-                <div class="col-sm-12 col-md-6">
+                <div class="col-md-12"><label>{{ tr.image }}</label></div>
+                <div class="col-md-12">
+                    <ng2-uploader [(ngModel)]="image" [ngModelOptions]="{standalone: true}" type="image" single hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}" uploadLabel="{{ tr.upload }} {{ tr.image }}" delLabel="{{ tr.delete }} {{ tr.image }}"></ng2-uploader>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
                     <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="model.subject" #subject="ngModel" placeholder="{{ tr.subject }}" required />
                     <div [hidden]="subject.valid || subject.pristine" class="alert alert-danger">
                         {{ tr.subject }} {{ tr.is }}  {{ tr.required }}
                     </div>
                 </div>
-
-                <div class="col-sm-12 col-md-6">
-                    <ng2-uploader [(ngModel)]="image" [ngModelOptions]="{standalone: true}" single hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}" uploadLabel="{{ tr.upload }} {{ tr.image }}" delLabel="{{ tr.delete }} {{ tr.image }}"></ng2-uploader>
-                </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-12">
-                    <ng2-summernote [(ngModel)]="appendix" [ngModelOptions]="{standalone: true}" height="200" lang="cs-CZ" serverImgUp hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}"></ng2-summernote>
+                    <ng2-summernote [(ngModel)]="appendix" [ngModelOptions]="{standalone: true}" height="150" lang="cs-CZ" serverImgUp hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}"></ng2-summernote>
                 </div>
             </div>
 
@@ -29,14 +32,16 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-sm-12 col-md-6">
-                    <label for="gallery">{{ tr.gallery }}</label>
-                    <input type="text" class="form-control" id="gallery" name="gallery" [(ngModel)]="model.gallery" #gallery="ngModel" placeholder="{{ tr.gallery }}" />
+                <div class="col-md-12"><label>{{ tr.gallery }}</label></div>
+                <div class="col-md-12">
+                    <ng2-uploader [(ngModel)]="gallery" [ngModelOptions]="{standalone: true}" type="image" hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}" uploadLabel="{{ tr.upload }} {{ tr.image }}" delLabel="{{ tr.delete }} {{ tr.image }}"></ng2-uploader>
                 </div>
+            </div>
 
-                <div class="col-sm-12 col-md-6">
-                    <label for="attachments">{{ tr.attachments }}</label>
-                    <input type="text" class="form-control" id="attachments" name="attachments" [(ngModel)]="model.attachments" #attachments="ngModel" />
+            <div class="form-group row">
+                <div class="col-md-12"><label>{{ tr.attachments }}</label></div>
+                <div class="col-md-12">
+                    <ng2-uploader [(ngModel)]="attachments" [ngModelOptions]="{standalone: true}" type="file" hostUpload="{{hostUpload}}" uploadFolder="{{uploadFolder}}" uploadLabel="{{ tr.upload }} {{ tr.file }}" delLabel="{{ tr.delete }} {{ tr.file }}"></ng2-uploader>
                 </div>
             </div>
 
@@ -47,8 +52,6 @@
                 </div>
             </div>
         </form>
-
-        <p>{{ image }}</p>
     </div>
 
     <div [hidden]="!submitted">

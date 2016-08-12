@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {appConfig} from '../shared/index';
+import {AppConfig} from '../shared/index';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,7 +9,7 @@ export class DocsService {
 
   constructor(
     private _http: Http,
-    private _appConfig: appConfig
+    private _appConfig: AppConfig
   ) {}
 
   getDocs() {

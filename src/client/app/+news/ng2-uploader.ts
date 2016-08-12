@@ -241,7 +241,7 @@ export class Ng2Uploader {
         }
         this._fileDelete(fileUrl)
             .then((resp: any) => { 
-                let delFile: any = resp.json();
+                let delFile: any = resp.json().data;
                 if (delFile[0].deletedFile == fileUrl || (delFile[0].deletedFile == fileUrl[0] && delFile[1].deletedFile == fileUrl[1])) {
                     this.updateValue(origFileUrl);
                     if (typeof this.single !== 'undefined') {
@@ -277,7 +277,7 @@ export class Ng2Uploader {
                 if (typeof this.single !== 'undefined') {
                     this.hideUploader = true;
                 }
-                this.updateValue(uploadedFile[0]);
+                this.updateValue(uploadedFile.data[0]);
             },
             error: (err: any) => { this._errHandle(err) }
         });

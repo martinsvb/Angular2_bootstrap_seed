@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { Ng2Uploader } from './ng2-uploader';
-import { appConfig } from '../shared/index';
+import { AppConfig, AppRequest } from '../shared/index';
 import { NewModel } from './news.interface';
 import { TransHelper } from '../shared/translation/translation.component';
 
@@ -11,10 +11,17 @@ import { TransHelper } from '../shared/translation/translation.component';
   selector: 'sd-news',
   templateUrl: 'news.component.html',
   directives: [Ng2Summernote, Ng2Uploader],
-  providers: [appConfig, TransHelper]
+  providers: [AppConfig, AppRequest, TransHelper]
 })
 
 export class NewsComponent {
+  
+  private _module = "news";
+
+  private _errorMessage: any;
+
+  res: any;
+
   hostUpload: string;
   uploadFolder: string;
   tr: any;
@@ -25,12 +32,13 @@ export class NewsComponent {
   attachments: Array<string> = [];
 
   constructor(
-    private _appConfig: appConfig,
-    private _TransHelper: TransHelper
+    private _appConfig: AppConfig,
+    private _transHelper: TransHelper,
+    private _appRequest: AppRequest
   ) {
     this.hostUpload = _appConfig.hostUpload;
     this.uploadFolder = "test_company/news";
-    this.tr = _TransHelper.getTranslation();
+    this.tr = _transHelper.getTranslation();
   }
 
   model: NewModel = {
@@ -77,4 +85,52 @@ export class NewsComponent {
     this.active = false;
     setTimeout(() => this.active = true, 0);
   }
+
+    /**
+     *  Retrieve data from API
+     */
+    getAction () {
+        
+        this._appRequest.getAction(this._module)
+                        .subscribe(
+                          (news: any) => this.model = news,
+                          (error: any) =>  this._errorMessage = error
+                        );
+    }
+
+    /**
+     *  Send delete request to API
+     */
+    deleteAction () {
+        
+        this._appRequest.deleteAction(this._module + '/id/test')
+                        .subscribe(
+                          (res: any) => this.res = res,
+                          (error: any) =>  this._errorMessage = error
+                        );
+    }
+
+    /**
+     *  Send create request to API
+     */
+    postAction () {
+
+        this._appRequest.postAction(this._module, {test: 'test post'})
+                        .subscribe(
+                          (res: any) => this.res = res,
+                          (error: any) =>  this._errorMessage = error
+                        );
+    }
+
+    /**
+     *  Send update request to API
+     */
+    putAction () {
+        
+        this._appRequest.putAction(this._module,  {test: 'test put'})
+                        .subscribe(
+                          (res: any) => this.res = res,
+                          (error: any) =>  this._errorMessage = error
+                        );
+    }
 }

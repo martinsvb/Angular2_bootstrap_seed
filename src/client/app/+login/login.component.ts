@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ApplicationRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ROUTER_DIRECTIVES, Router, } from '@angular/router';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { AppConfig, AppRequest } from '../shared/index';
 import { TransComponent } from '../shared/translation/translation.component';
+import { CacheComponent } from '../shared/cache/cache.component';
 import { LoginModel } from './login.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
@@ -40,6 +41,9 @@ export class LoginComponent {
   constructor(
     private _TransComponent: TransComponent,
     private _appRequest: AppRequest,
+    private _cache: CacheComponent,
+    private _zone: NgZone,
+    private _appRef: ApplicationRef,
     private _router: Router
   ) {
     this.tr = _TransComponent.getTranslation();
@@ -60,14 +64,9 @@ export class LoginComponent {
 
                         if (res.hasOwnProperty("loginInfo")) {
                           if (res.loginInfo === 1) {
-                            this.model = {
-                              email: '',
-                              password: ''
-                            };
-
-                            this.active = false;
-                            setTimeout(() => this.active = true, 0);
-
+                            this._cache.setItem('user', res);
+                            
+                            this._appRef.tick();
                             this._router.navigate(['/']);
                           }
 

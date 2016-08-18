@@ -82,7 +82,7 @@ function processComponentScssMain() {
     .pipe(plugins.sass().on('error', plugins.sass.logError))
     .pipe(plugins.postcss(processors))
     .pipe(plugins.sourcemaps.write(isProd ? '.' : ''))
-    .pipe(gulp.dest(isProd ? TMP_DIR : APP_DEST));
+    .pipe(gulp.dest(CSS_DEST));
 }
 
 /**
@@ -166,4 +166,8 @@ function processExternalCss() {
 /**
  * Executes the build process, processing the HTML and CSS files.
  */
-export = () => merge(processComponentStylesheets(), prepareTemplates(), processExternalStylesheets());
+export = () => merge(
+  processComponentStylesheets(),
+  prepareTemplates()
+  // , processExternalStylesheets()
+);

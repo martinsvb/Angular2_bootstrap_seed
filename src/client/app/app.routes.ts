@@ -5,13 +5,17 @@ import { DocsRoutes } from './+docs/index';
 import { ButtonsRoutes } from './+buttons/index';
 import { DatepickerRoutes } from './+datepicker/index';
 import { NewsRoutes } from './+news/index';
+import { LoginRoutes } from './+login/index';
+import { RegisterRoutes } from './+register/index';
 
 const routes: RouterConfig = [
   ...HomeRoutes,
   ...DocsRoutes,
   ...ButtonsRoutes,
   ...DatepickerRoutes,
-  ...NewsRoutes
+  ...NewsRoutes,
+  ...LoginRoutes,
+  ...RegisterRoutes
 ];
 
 export const APP_ROUTER_PROVIDERS = [

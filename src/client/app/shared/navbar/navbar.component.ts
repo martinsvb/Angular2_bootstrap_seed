@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { TransHelper } from '../translation/translation.component';
+import { TransComponent } from '../translation/translation.component';
+import { CacheComponent } from '../cache/cache.component';
 
 /**
  * This class represents the navigatin bar component.
@@ -10,17 +11,30 @@ import { TransHelper } from '../translation/translation.component';
   selector: 'sd-navbar',
   templateUrl: 'navbar.component.html',
   directives: [ROUTER_DIRECTIVES],
-  providers: [TransHelper]
+  providers: [TransComponent]
 })
 
 export class NavbarComponent {
 
     languages: Array<string>;
     tr: any;
+    user: any;
 
     constructor(
-        private _TransHelper: TransHelper
+        private _TransComponent: TransComponent,
+        private _cache: CacheComponent
     ) {
-        this.tr = _TransHelper.getTranslation();
+        this.tr = _TransComponent.getTranslation();
+        this.user = _cache.getItem('user');
+    }
+
+    logout() {
+        this.user = {
+            name: 'guest',
+            role: 'guest',
+            modules: {}
+        };
+
+        this._cache.setItem('user', this.user);
     }
 }

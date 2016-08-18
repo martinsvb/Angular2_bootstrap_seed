@@ -1,17 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { AppConfig } from '../appConfig/index';
 
 @Injectable()
+@Component({
+    providers: [AppConfig]
+})
 export class AppRequest {
     
     private _headers = new Headers({
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
+        'accept': '*/*',
+        'content-Type': 'application/json'
     });
     
     private _options = new RequestOptions({ headers: this._headers });
@@ -63,10 +68,56 @@ export class AppRequest {
                         .catch(this._handleError);
     }
 
+    /**
+     *  Retrieve data from API
+     */
+    getActionPr (url: string): Promise<any[]> {
+        
+        return this._http.get(this._appConfig.hostApi + url)
+                    .toPromise()
+                    .then(this._extractData)
+                    .catch(this._handleError);
+    }
+
+    /**
+     *  Send delete request to API
+     */
+    deleteActionPr (url: string): Promise<any[]> {
+        
+        return this._http.delete(this._appConfig.hostApi + url)
+                    .toPromise()
+                    .then(this._extractData)
+                    .catch(this._handleError);
+    }
+
+    /**
+     *  Send create request to API
+     */
+    postActionPr (url: string, data: any): Promise<any> {
+        let body = JSON.stringify(data);
+
+        return this._http.post(this._appConfig.hostApi + url, body, this._options)
+                        .toPromise()
+                        .then(this._extractData)
+                        .catch(this._handleError);
+    }
+
+    /**
+     *  Send update request to API
+     */
+    putActionPr (url: string, data: any): Promise<any> {
+        let body = JSON.stringify(data);
+
+        return this._http.put(this._appConfig.hostApi + url, body, this._options)
+                        .toPromise()
+                        .then(this._extractData)
+                        .catch(this._handleError);
+    }
+
     private _extractData(res: Response) {
         let body = res.json();
 
-        return body.data || { };
+        return body.data || {};
     }
 
     private _handleError (error: any) {

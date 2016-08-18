@@ -1,10 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {AppConfig} from '../shared/index';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
+@Component({
+  providers: [AppConfig]
+})
 export class DocsService {
 
   constructor(

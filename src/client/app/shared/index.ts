@@ -6,3 +6,4 @@ export * from './appConfig/index';
 export * from './appRequest/index';
 export * from './errorHandler/index';
 export * from './translation/index';
+export * from './cache/index';

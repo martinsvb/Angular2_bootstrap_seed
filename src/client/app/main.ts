@@ -8,6 +8,9 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 import { APP_ROUTER_PROVIDERS } from './app.routes';
 import { AppComponent } from './app.component';
 
+import { CacheComponent } from './shared/cache/cache.component';
+
+
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 /**
@@ -21,7 +24,8 @@ bootstrap(AppComponent, [
   {
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
-  }
+  },
+  CacheComponent
 ]);
 
 // In order to start the Service Worker located at "./worker.js"

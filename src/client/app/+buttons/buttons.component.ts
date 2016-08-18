@@ -15,6 +15,8 @@ export class ButtonsComponent {
   radioModel: string = 'Middle';
   checkModel: any = {left: false, middle: true, right: false};
 
+  constructor() {}
+
   ngOnInit() {
     console.info("ButtonsComponent loaded...");
   }

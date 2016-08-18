@@ -1,6 +1,25 @@
+html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .row {
-    @extend .row;
+    @include make-row();
     margin-bottom: .5rem;
+}
+
+.cleaner {
+    clear: both;
+}
+
+.fullWidth {
+    width: 100%;
 }
 
 h1:first-letter,
@@ -9,13 +28,15 @@ h3:first-letter,
 h4:first-letter,
 h5:first-letter,
 h6:first-letter,
-label:first-letter {
+label:first-letter,
+p:first-letter,
+button:first-letter {
     text-transform: uppercase;
 }
 
 .container {
     /** Only mobile */
-    @media (max-width: 991px) {
+    @include media-breakpoint-down(md) {
         width: 100%;
         margin: 0 1rem;
         padding: 0;
@@ -23,10 +44,18 @@ label:first-letter {
 }
 
 .ng-valid[required] {
-    border-left: 5px solid green;
+    border-left: .3rem solid $brand-success;
 }
 .ng-invalid {
-    border-left: 5px solid red;
+    border-left: .3rem solid $brand-danger;
+}
+input[type="text"].ng-pristine,
+input[type="number"].ng-pristine,
+input[type="password"].ng-pristine {
+    border-left: $input-btn-border-width solid $input-group-addon-border-color;
+    &:focus {
+        border-left: $input-btn-border-width solid $input-border-focus;
+    }
 }
 
 .input-group-addon {

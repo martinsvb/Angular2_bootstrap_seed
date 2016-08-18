@@ -4,14 +4,14 @@ import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { Ng2Uploader } from './ng2-uploader';
 import { AppConfig, AppRequest } from '../shared/index';
 import { NewModel } from './news.interface';
-import { TransHelper } from '../shared/translation/translation.component';
+import { TransComponent } from '../shared/translation/translation.component';
 
 @Component({
   moduleId: module.id,
   selector: 'sd-news',
   templateUrl: 'news.component.html',
   directives: [Ng2Summernote, Ng2Uploader],
-  providers: [AppConfig, AppRequest, TransHelper]
+  providers: [AppConfig, AppRequest, TransComponent]
 })
 
 export class NewsComponent {
@@ -33,12 +33,12 @@ export class NewsComponent {
 
   constructor(
     private _appConfig: AppConfig,
-    private _transHelper: TransHelper,
+    private _TransComponent: TransComponent,
     private _appRequest: AppRequest
   ) {
     this.hostUpload = _appConfig.hostUpload;
     this.uploadFolder = "test_company/news";
-    this.tr = _transHelper.getTranslation();
+    this.tr = _TransComponent.getTranslation();
   }
 
   model: NewModel = {

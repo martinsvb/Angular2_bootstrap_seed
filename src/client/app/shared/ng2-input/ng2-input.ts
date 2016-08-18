@@ -9,7 +9,7 @@ import {
   forwardRef
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FORM_DIRECTIVES, ControlValueAccessor, NgModel } from '@angular/forms';
-import { TransHelper } from '../translation/translation.component';
+import { TransComponent } from '../translation/translation.component';
 
 // Control Value accessor provider
 const NG2INPUT_CONTROL_VALUE_ACCESSOR = new Provider(
@@ -32,7 +32,7 @@ const NG2INPUT_CONTROL_VALUE_ACCESSOR = new Provider(
         </div>
     </div>
   `,
-  providers: [TransHelper]
+  providers: [TransComponent]
 })
 
 export class Ng2Input {
@@ -52,9 +52,9 @@ export class Ng2Input {
 
     constructor (
         private _zone: NgZone,
-        private _TransHelper: TransHelper
+        private _TransComponent: TransComponent
     ) {
-        this.tr = _TransHelper.getTranslation();
+        this.tr = _TransComponent.getTranslation();
     }
 
     get value(): any { return this._value; };

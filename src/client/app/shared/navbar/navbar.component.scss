@@ -1,3 +1,9 @@
+.header {
+    background: $brand-back;
+    @include app-shadow(0, .2rem, .2rem, -.1rem);
+    margin-bottom: 1rem;
+}
+
 .app-nav {
     
     /** Mobile first */
@@ -8,9 +14,9 @@
         text-align: center;
         margin-right: .5rem;
         font-size: 1.2rem;
-        color: darken($brand-success, 20%);
-        border: 1px solid darken($brand-success, 20%);
+        color: $gray;
         border-radius: 50%;
+        background: #fff;
         &-ico {
             font-size: 1.2rem;
         }
@@ -21,7 +27,7 @@
         &.active-link {
             text-decoration: none;
             color: $gray-lightest;
-            background: darken($brand-success, 20%);
+            background: $gray;
         }
     }
     
@@ -43,5 +49,19 @@
                 padding: 0 .2rem;
             }
         }
+    }
+}
+
+.user-nav {
+    @include media-breakpoint-up(md) {
+        float: right;
+    }
+
+    a: {
+        line-height: 2.9rem;
+    }
+
+    .dropdown-menu {
+        right: 10px;
     }
 }

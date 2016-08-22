@@ -7,6 +7,7 @@ import { DatepickerRoutes } from './+datepicker/index';
 import { NewsRoutes } from './+news/index';
 import { LoginRoutes } from './+login/index';
 import { RegisterRoutes } from './+register/index';
+import { ProfileRoutes } from './+profile/index';
 
 const routes: RouterConfig = [
   ...HomeRoutes,
@@ -15,7 +16,8 @@ const routes: RouterConfig = [
   ...DatepickerRoutes,
   ...NewsRoutes,
   ...LoginRoutes,
-  ...RegisterRoutes
+  ...RegisterRoutes,
+  ...ProfileRoutes
 ];
 
 export const APP_ROUTER_PROVIDERS = [

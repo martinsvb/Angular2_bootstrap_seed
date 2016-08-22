@@ -22,6 +22,10 @@ html, body, .container-table {
     width: 100%;
 }
 
+h1 {
+    color: $gray;
+}
+
 h1:first-letter,
 h2:first-letter,
 h3:first-letter,
@@ -37,10 +41,14 @@ button:first-letter {
 .container {
     /** Only mobile */
     @include media-breakpoint-down(md) {
-        width: 100%;
+        @include width-calc(100%, 2rem);
         margin: 0 1rem;
         padding: 0;
     }
+}
+
+input {
+    margin-bottom: .2rem;
 }
 
 .ng-valid[required] {
@@ -60,4 +68,9 @@ input[type="password"].ng-pristine {
 
 .input-group-addon {
     padding-right: 1.5rem;
+}
+
+label,
+input[type="checkbox"] {
+    cursor: pointer !important;
 }

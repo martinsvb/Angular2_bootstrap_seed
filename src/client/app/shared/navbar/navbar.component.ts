@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { TransComponent } from '../translation/translation.component';
 import { CacheComponent } from '../cache/cache.component';
 
@@ -20,12 +20,17 @@ export class NavbarComponent {
     tr: any;
     user: any;
 
+    @Input() loginChange: any;
+
     constructor(
         private _TransComponent: TransComponent,
-        private _cache: CacheComponent
+        private _cache: CacheComponent,
+        private _router: Router
     ) {
         this.tr = _TransComponent.getTranslation();
-        this.user = _cache.getItem('user');
+        _cache.dataAdded$.subscribe((user: any) => {
+            this.user = user;
+        });
     }
 
     logout() {
@@ -36,5 +41,7 @@ export class NavbarComponent {
         };
 
         this._cache.setItem('user', this.user);
+
+        this._router.navigate(['/']);
     }
 }

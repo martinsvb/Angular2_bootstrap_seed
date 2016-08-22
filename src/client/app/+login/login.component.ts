@@ -1,4 +1,4 @@
-import { Component, NgZone, ApplicationRef } from '@angular/core';
+import { Component, NgZone, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ROUTER_DIRECTIVES, Router, } from '@angular/router';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
@@ -38,12 +38,13 @@ export class LoginComponent {
     password: ''
   };
 
+  @Output() loginChange = new EventEmitter();
+
   constructor(
     private _TransComponent: TransComponent,
     private _appRequest: AppRequest,
     private _cache: CacheComponent,
     private _zone: NgZone,
-    private _appRef: ApplicationRef,
     private _router: Router
   ) {
     this.tr = _TransComponent.getTranslation();
@@ -65,8 +66,7 @@ export class LoginComponent {
                         if (res.hasOwnProperty("loginInfo")) {
                           if (res.loginInfo === 1) {
                             this._cache.setItem('user', res);
-                            
-                            this._appRef.tick();
+
                             this._router.navigate(['/']);
                           }
 

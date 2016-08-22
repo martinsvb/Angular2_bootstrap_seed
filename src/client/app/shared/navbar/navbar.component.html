@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid header">
   <div class="row">
     <div class="col-md-12">
       <nav class="app-nav">
@@ -17,20 +17,21 @@
         <a class="app-nav-link" title="{{ tr.news | uppercase }}" [routerLink]="['/news']" [routerLinkActive]="['active-link']">
           <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr.news | uppercase }}</span>
         </a>
-      </nav>
 
-      <div class="dropdown userDropDown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user" aria-hidden="true"></i> {{ user.name }}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="userDropDown" *ngIf="user.role == 'guest'">
-          <a class="dropdown-item" href="#" [routerLink]="['/login']">{{ tr.login }}</a>
-          <a class="dropdown-item" href="#" [routerLink]="['/register']">{{ tr.register }}</a>
+        <div class="dropdown user-nav">
+          <a class="dropdown-toggle" href="#" id="userDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user" aria-hidden="true"></i> {{ user?.name }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="userDropDown" *ngIf="user?.role == 'guest'">
+            <a class="dropdown-item" href="#" [routerLink]="['/login']">{{ tr.login }}</a>
+            <a class="dropdown-item" href="#" [routerLink]="['/register']">{{ tr.register }}</a>
+          </div>
+          <div class="dropdown-menu" aria-labelledby="userDropDown" *ngIf="user?.role == 'user' || user?.role == 'admin'">
+            <a class="dropdown-item" href="#" [routerLink]="['/profile']">{{ tr.profile }}</a>
+            <a class="dropdown-item" href="#" (click)="logout()">{{ tr.logout }}</a>
+          </div>
         </div>
-        <div class="dropdown-menu" aria-labelledby="userDropDown" *ngIf="user.role == 'user' || user.role == 'admin'">
-          <a class="dropdown-item" href="#" (click)="logout()">{{ tr.logout }}</a>
-        </div>
-      </div>
+      </nav>
     </div>
   </div>
 </div>

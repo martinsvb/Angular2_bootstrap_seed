@@ -1,5 +1,11 @@
 <div class="container">
     <h1>{{ tr.profile }}</h1>
+    <alert *ngIf="alerts.warning" [type]="'danger'" dismissible="true" (close)="closeAlert('warning')">
+        {{ alerts.warning }}
+    </alert>
+    <alert *ngIf="alerts.info" [type]="'success'" dismissible="true" (close)="closeAlert('info')">
+        {{ alerts.info }}
+    </alert>
     <form (ngSubmit)="changeProfile()" #profileForm="ngForm" novalidate>
 
         <div class="form-group row">

@@ -4,11 +4,13 @@ import { AppConfig, AppRequest } from '../shared/index';
 import { ProfileModel } from './profile.interface';
 import { TransComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
+import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   moduleId: module.id,
   selector: 'sd-profile',
   templateUrl: 'profile.component.html',
+  directives: [AlertComponent],
   providers: [AppConfig, AppRequest, TransComponent]
 })
 
@@ -18,20 +20,19 @@ export class ProfileComponent {
   private _errorMessage: any;
 
   res: any;
-
   hostUpload: string;
-  
   tr: any;
 
+  alerts: any = {};
+
   model: ProfileModel;
+  userBack: any;
 
   constructor(
-    private _appConfig: AppConfig,
     private _TransComponent: TransComponent,
     private _cache: CacheComponent,
     private _appRequest: AppRequest
   ) {
-    this.hostUpload = _appConfig.hostUpload;
     this.tr = _TransComponent.getTranslation();
         this.tr = _TransComponent.getTranslation();
         _cache.dataAdded$.subscribe((user: any) => {
@@ -40,6 +41,8 @@ export class ProfileComponent {
             this.model.password = "";
             this.model.newpassword = "";
             this.model.newrepassword = "";
+
+            this.userBack = this.model;
         });
   }
 
@@ -69,9 +72,30 @@ export class ProfileComponent {
       let sendData = [this.model];
 
       this._appRequest.putAction(this._apiUrl, sendData)
-                      .subscribe(
-                        (res: any) => this.res = res,
+                      .subscribe((res: any) => {
+                        if (res.hasOwnProperty("profileWarning")) {
+                          this.alerts.warning = this.tr[res.profileWarning];
+                        }
+
+                        if (res.hasOwnProperty("profileInfo")) {
+                          if (res.profileInfo === 1) {
+                            this.alerts.info = this.tr.profileChanged;
+                          }
+
+                          if (res.profileInfo === 0) {
+                            this.alerts.warning = this.tr.profileNotChanged;
+                            this.model = this.userBack;
+                          }
+                        }
+                      },
                         (error: any) =>  this._errorMessage = error
                       );
+  }
+
+  /**
+   *  Close profile info alert
+   */
+  closeAlert(alert: string) {
+    this.alerts[alert] = null;
   }
 }

@@ -23,7 +23,9 @@ html, body, .container-table {
 }
 
 h1 {
-    color: $gray;
+    color: $gray-light;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
 }
 
 h1:first-letter,

@@ -6,8 +6,17 @@ import { Injectable } from '@angular/core';
  *  Import directly from full path not use barrel exports
  */
 @Injectable()
-export class TransComponent {
+export class TranslationComponent {
     
+    getTranslation(lang: string = null) {
+        let userLang = lang || navigator.language.split('-')[0]; // use navigator lang if available
+        let availLang = Object.keys(this.translation);
+
+        userLang = availLang.indexOf(userLang) > -1 ? userLang : 'en';
+
+        return this.translation[userLang];
+    }
+
     regex: any = {
         "emailSimple": /^([A-Za-z0-9]|-|_)+@[A-Za-z]+\.[A-Za-z]{2,}$/,
         "email": /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -61,6 +70,13 @@ export class TransComponent {
             "requiredTence": (name: string) => "% is required.".replace("%", this.translation.en[name]),
             "minLengthTence": (minLength: string) => "Minimal length is % characters.".replace("%", minLength),
             "patternTence": (name: string) => "Value doesn't match type %.".replace("%", name),
+            "language": "language",
+            "en": "en",
+            "english": "english",
+            "cz": "cz",
+            "czech": "czech",
+            "sk": "sk",
+            "slovak": "slovak",
             "regex": this.regex
         },
         "cz": {
@@ -110,6 +126,13 @@ export class TransComponent {
             "requiredTence": (name: string) => "% je vyžadováno.".replace("%", this.translation.cz[name]),
             "minLengthTence": (minLength: string) => "Minimální délka je % znaků.".replace("%", minLength),
             "patternTence": (name: string) => "Hodnota neodpovídá %.".replace("%", name),
+            "language": "jazyk",
+            "en": "en",
+            "english": "angličtina",
+            "cz": "cz",
+            "czech": "čeština",
+            "sk": "sk",
+            "slovak": "slovenčina",
             "regex": this.regex
         },
         "sk": {
@@ -159,16 +182,14 @@ export class TransComponent {
             "requiredTence": (name: string) => "% je vyžadované.".replace("%", this.translation.sk[name]),
             "minLengthTence": (minLength: string) => "Minimálna dĺžka je % znakov.".replace("%", minLength),
             "patternTence": (name: string) => "Hodnota nezodpovedá typu %.".replace("%", name),
+            "language": "jazyk",
+            "en": "en",
+            "english": "angličtina",
+            "cz": "cz",
+            "czech": "čeština",
+            "sk": "sk",
+            "slovak": "slovenčina",
             "regex": this.regex
         }
     };
-
-    getTranslation() {
-        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        let availLang = Object.keys(this.translation);
-        
-        userLang = availLang.indexOf(userLang) > -1 ? userLang : 'en';
-
-        return this.translation[userLang];
-    }
 }

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { AppConfig, AppRequest } from '../shared/index';
-import { TransComponent } from '../shared/translation/translation.component';
+import { CacheComponent } from '../shared/cache/cache.component';
+import { TranslationComponent } from '../shared/translation/translation.component';
 import { RegisterModel } from './register.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
@@ -11,7 +12,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'sd-register',
   templateUrl: 'register.component.html',
   directives: [AlertComponent],
-  providers: [AppConfig, AppRequest, TransComponent]
+  providers: [AppConfig, AppRequest]
 })
 
 export class RegisterComponent {
@@ -39,10 +40,16 @@ export class RegisterComponent {
 
   constructor(
     private _appConfig: AppConfig,
-    private _TransComponent: TransComponent,
+    private _cache: CacheComponent,
+    private _tr: TranslationComponent,
     private _appRequest: AppRequest
   ) {
-    this.tr = _TransComponent.getTranslation();
+    this.tr = _tr.getTranslation(_cache.getItem('lang'));
+    _cache.dataAdded$.subscribe((data: any) => {
+        if (data.hasOwnProperty('lang')) {
+          this.tr = _tr.getTranslation(data['lang']);
+        }
+    });
   }
 
   /**

@@ -9,6 +9,7 @@ import { APP_ROUTER_PROVIDERS } from './app.routes';
 import { AppComponent } from './app.component';
 
 import { CacheComponent } from './shared/cache/cache.component';
+import { TranslationComponent } from './shared/translation/translation.component';
 
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
@@ -25,7 +26,8 @@ bootstrap(AppComponent, [
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
   },
-  CacheComponent
+  CacheComponent,
+  TranslationComponent
 ]);
 
 // In order to start the Service Worker located at "./worker.js"

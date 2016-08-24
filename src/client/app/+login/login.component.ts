@@ -1,9 +1,9 @@
-import { Component, NgZone, EventEmitter, Output } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ROUTER_DIRECTIVES, Router, } from '@angular/router';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { AppConfig, AppRequest } from '../shared/index';
-import { TransComponent } from '../shared/translation/translation.component';
+import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
 import { LoginModel } from './login.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
@@ -13,7 +13,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'sd-login',
   templateUrl: 'login.component.html',
   directives: [ROUTER_DIRECTIVES, AlertComponent],
-  providers: [AppConfig, AppRequest, TransComponent]
+  providers: [AppConfig, AppRequest]
 })
 
 export class LoginComponent {
@@ -38,16 +38,18 @@ export class LoginComponent {
     password: ''
   };
 
-  @Output() loginChange = new EventEmitter();
-
   constructor(
-    private _TransComponent: TransComponent,
+    private _tr: TranslationComponent,
     private _appRequest: AppRequest,
     private _cache: CacheComponent,
-    private _zone: NgZone,
     private _router: Router
   ) {
-    this.tr = _TransComponent.getTranslation();
+    this.tr = _tr.getTranslation(_cache.getItem('lang'));
+    _cache.dataAdded$.subscribe((data: any) => {
+        if (data.hasOwnProperty('lang')) {
+          this.tr = _tr.getTranslation(data['lang']);
+        }
+    });
   }
 
   login() {

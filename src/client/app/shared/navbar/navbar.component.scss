@@ -52,9 +52,28 @@
     }
 }
 
+.right-box {
+    float: right;
+}
+
+.lang-nav,
 .user-nav {
+
+    &-name {
+        display: none;
+    }
+    &-name-mobile {
+        display: inline-block;
+    }
+
+    /** Medium screens */
     @include media-breakpoint-up(md) {
-        float: right;
+        &-name {
+            display: inline-block;
+        }
+        &-name-mobile {
+            display: none;
+        }
     }
 
     a: {
@@ -63,5 +82,13 @@
 
     .dropdown-menu {
         right: 10px;
+    }
+}
+
+.lang-nav {
+
+    &-img {
+        width: 1.5rem;
+        height: auto;
     }
 }

@@ -14,11 +14,11 @@ export class CacheComponent {
 
     setItem(key: string, data: any) {
         this._data[key] = data;
-        this._subject.next(data);
+        this._subject.next(this._data);
     }
 
     getItem(key: string) {
-        let result = 0;
+        let result: any;
 
         if (this._data.hasOwnProperty(key)) {
             result = this._data[key];

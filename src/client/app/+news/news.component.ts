@@ -3,15 +3,16 @@ import { NgForm } from '@angular/forms';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { Ng2Uploader } from './ng2-uploader';
 import { AppConfig, AppRequest } from '../shared/index';
+import { CacheComponent } from '../shared/cache/cache.component';
 import { NewModel } from './news.interface';
-import { TransComponent } from '../shared/translation/translation.component';
+import { TranslationComponent } from '../shared/translation/translation.component';
 
 @Component({
   moduleId: module.id,
   selector: 'sd-news',
   templateUrl: 'news.component.html',
   directives: [Ng2Summernote, Ng2Uploader],
-  providers: [AppConfig, AppRequest, TransComponent]
+  providers: [AppConfig, AppRequest]
 })
 
 export class NewsComponent {
@@ -33,12 +34,18 @@ export class NewsComponent {
 
   constructor(
     private _appConfig: AppConfig,
-    private _TransComponent: TransComponent,
+    private _cache: CacheComponent,
+    private _tr: TranslationComponent,
     private _appRequest: AppRequest
   ) {
     this.hostUpload = _appConfig.hostUpload;
     this.uploadFolder = "test_company/news";
-    this.tr = _TransComponent.getTranslation();
+    this.tr = _tr.getTranslation(_cache.getItem('lang'));
+    _cache.dataAdded$.subscribe((data: any) => {
+        if (data.hasOwnProperty('lang')) {
+          this.tr = _tr.getTranslation(data['lang']);
+        }
+    });
   }
 
   model: NewModel = {

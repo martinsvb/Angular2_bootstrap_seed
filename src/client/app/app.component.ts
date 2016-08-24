@@ -17,8 +17,10 @@ import { CacheComponent } from './shared/cache/cache.component';
 })
 export class AppComponent {
 
-  constructor (private _cache: CacheComponent) {
-    this._cache.setItem('user', {
+  constructor (
+    private _cache: CacheComponent
+  ) {
+    _cache.setItem('user', {
       name: 'guest',
       role: 'guest',
       modules: {}

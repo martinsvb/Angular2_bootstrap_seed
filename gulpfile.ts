@@ -21,6 +21,7 @@ gulp.task('build.dev', (done: any) =>
               'build.js.dev',
               'build.index.dev',
               'font-awesome.copy',
+              'img.copy',
               'summernote',
               'mergeCssDev',
               done));
@@ -57,6 +58,7 @@ gulp.task('build.prod', (done: any) =>
               'build.index.prod',
               'server.copy',
               'font-awesome.copy',
+              'img.copy',
               'summernote',
               'summernoteCssProd',
               done));
@@ -74,6 +76,7 @@ gulp.task('build.prod.fast', (done: any) =>
               'build.index.prod',
               'server.copy',
               'font-awesome.copy',
+              'img.copy',
               'summernote',
               'summernoteCssProd',
               done));
@@ -90,6 +93,16 @@ gulp.task('server.copy', (done: any) =>
 gulp.task('font-awesome.copy', (done: any) =>
   gulp.src([
     './node_modules/font-awesome/fonts/*'
+  ])
+  .pipe(gulp.dest('./dist/dev/assets/fonts'))
+  .pipe(gulp.dest('./dist/prod/assets/fonts'))
+);
+
+// --------------
+// Copy img.
+gulp.task('img.copy', (done: any) =>
+  gulp.src([
+    './src/client/assets/img*'
   ])
   .pipe(gulp.dest('./dist/dev/assets/fonts'))
   .pipe(gulp.dest('./dist/prod/assets/fonts'))

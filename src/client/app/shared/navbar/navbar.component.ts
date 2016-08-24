@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { TransComponent } from '../translation/translation.component';
+import { TranslationComponent } from '../translation/translation.component';
 import { CacheComponent } from '../cache/cache.component';
 
 /**
@@ -10,26 +10,33 @@ import { CacheComponent } from '../cache/cache.component';
   moduleId: module.id,
   selector: 'sd-navbar',
   templateUrl: 'navbar.component.html',
-  directives: [ROUTER_DIRECTIVES],
-  providers: [TransComponent]
+  directives: [ROUTER_DIRECTIVES]
 })
 
 export class NavbarComponent {
 
-    languages: Array<string>;
+    lang: string;
+    langTr: string;
     tr: any;
     user: any;
 
-    @Input() loginChange: any;
-
     constructor(
-        private _TransComponent: TransComponent,
+        private _tr: TranslationComponent,
         private _cache: CacheComponent,
         private _router: Router
     ) {
-        this.tr = _TransComponent.getTranslation();
-        _cache.dataAdded$.subscribe((user: any) => {
-            this.user = user;
+        this.lang = _cache.getItem('lang') || "en";
+        this.tr = _tr.getTranslation(this.lang);
+        this.langTr = this.tr[this.lang];
+        _cache.dataAdded$.subscribe((data: any) => {
+            if (data.hasOwnProperty('user')) {
+                this.user = data['user'];
+            }
+            if (data.hasOwnProperty('lang')) {
+                this.lang = data.lang || "en";
+                this.tr = _tr.getTranslation(this.lang);
+                this.langTr = this.tr[this.lang];
+            }
         });
     }
 
@@ -43,5 +50,9 @@ export class NavbarComponent {
         this._cache.setItem('user', this.user);
 
         this._router.navigate(['/']);
+    }
+
+    translation(lang: string) {
+        this._cache.setItem('lang', lang);
     }
 }

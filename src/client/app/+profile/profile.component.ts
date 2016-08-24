@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AppConfig, AppRequest } from '../shared/index';
 import { ProfileModel } from './profile.interface';
-import { TransComponent } from '../shared/translation/translation.component';
+import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
@@ -11,7 +11,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'sd-profile',
   templateUrl: 'profile.component.html',
   directives: [AlertComponent],
-  providers: [AppConfig, AppRequest, TransComponent]
+  providers: [AppConfig, AppRequest]
 })
 
 export class ProfileComponent {
@@ -29,21 +29,24 @@ export class ProfileComponent {
   userBack: any;
 
   constructor(
-    private _TransComponent: TransComponent,
+    private _tr: TranslationComponent,
     private _cache: CacheComponent,
     private _appRequest: AppRequest
   ) {
-    this.tr = _TransComponent.getTranslation();
-        this.tr = _TransComponent.getTranslation();
-        _cache.dataAdded$.subscribe((user: any) => {
-            this.model = user;
-            this.model.chpassword = false;
-            this.model.password = "";
-            this.model.newpassword = "";
-            this.model.newrepassword = "";
+    this.tr = _tr.getTranslation(_cache.getItem('lang'));
+    _cache.dataAdded$.subscribe((data: any) => {
+        if (data.hasOwnProperty('user')) this.model = data['user'];
+        this.model.chpassword = false;
+        this.model.password = "";
+        this.model.newpassword = "";
+        this.model.newrepassword = "";
 
-            this.userBack = this.model;
-        });
+        this.userBack = this.model;
+
+        if (data.hasOwnProperty('lang')) {
+          this.tr = _tr.getTranslation(data['lang']);
+        }
+    });
   }
 
   isValid() {

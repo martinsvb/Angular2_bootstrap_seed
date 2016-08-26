@@ -28,6 +28,15 @@ h1 {
     letter-spacing: .2rem;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    display: inline-block;
+}
+
 h1:first-letter,
 h2:first-letter,
 h3:first-letter,
@@ -36,7 +45,8 @@ h5:first-letter,
 h6:first-letter,
 label:first-letter,
 p:first-letter,
-button:first-letter {
+button:first-letter,
+th:first-letter {
     text-transform: uppercase;
 }
 
@@ -73,6 +83,19 @@ input[type="password"].ng-pristine {
 }
 
 label,
-input[type="checkbox"] {
+input[type="checkbox"],
+.showPointer {
     cursor: pointer !important;
+}
+
+/** Bootstrap responsive table hack */
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+.active {
+    background: $brand-success;
+}
+.disabled {
+    background: $brand-danger;
 }

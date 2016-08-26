@@ -6,7 +6,6 @@
 
   <div class="row" *ngIf="user?.role == 'guest'">
     <div class="col-md-12">
-      <p>You can login or register here:</p>
       <button class="btn btn-success" href="#" [routerLink]="['/login']">{{ tr?.login }}</button>
       <button class="btn btn-default" href="#" [routerLink]="['/register']">{{ tr?.register }}</button>
     </div>

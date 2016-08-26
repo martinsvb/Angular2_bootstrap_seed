@@ -8,6 +8,7 @@ import { NewsRoutes } from './+news/index';
 import { LoginRoutes } from './+login/index';
 import { RegisterRoutes } from './+register/index';
 import { ProfileRoutes } from './+profile/index';
+import { CompaniesRoutes } from './+companies/index';
 
 const routes: RouterConfig = [
   ...HomeRoutes,
@@ -17,7 +18,8 @@ const routes: RouterConfig = [
   ...NewsRoutes,
   ...LoginRoutes,
   ...RegisterRoutes,
-  ...ProfileRoutes
+  ...ProfileRoutes,
+  ...CompaniesRoutes
 ];
 
 export const APP_ROUTER_PROVIDERS = [

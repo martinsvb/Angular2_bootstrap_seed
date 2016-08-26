@@ -19,7 +19,6 @@ export class ProfileComponent {
   private _apiUrl = "user";
   private _errorMessage: any;
 
-  res: any;
   hostUpload: string;
   tr: any;
 

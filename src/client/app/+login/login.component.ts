@@ -1,6 +1,6 @@
 import { Component, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ROUTER_DIRECTIVES, Router, } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { AppConfig, AppRequest } from '../shared/index';
 import { TranslationComponent } from '../shared/translation/translation.component';

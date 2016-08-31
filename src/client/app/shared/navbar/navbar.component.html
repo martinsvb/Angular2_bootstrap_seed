@@ -5,20 +5,23 @@
         <a class="app-nav-link" title="{{ tr?.home | uppercase }}" [routerLink]="['/']" [routerLinkActive]="['active-link']">
           <i class="fa fa-home app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.home | uppercase }}</span>
         </a>
-        <a class="app-nav-link" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">
-          <i class="fa fa-book app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">DOCS</span>
-        </a>
-        <a class="app-nav-link" title="buttons" [routerLink]="['/buttons']" [routerLinkActive]="['active-link']">
-          <i class="fa fa-hand-grab-o app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">BUTTONS</span>
-        </a>
-        <a class="app-nav-link" title="datepicker" [routerLink]="['/datepicker']" [routerLinkActive]="['active-link']">
-          <i class="fa fa-calendar app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">DATEPICKER</span>
-        </a>
-        <a class="app-nav-link" title="{{ tr?.news | uppercase }}" [routerLink]="['/news']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('news')" title="{{ tr?.news | uppercase }}" [routerLink]="['/news']" [routerLinkActive]="['active-link']">
           <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.news | uppercase }}</span>
         </a>
-        <a class="app-nav-link" title="{{ tr?.companies | uppercase }}" [routerLink]="['/companies']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('companies')" title="{{ tr?.companies | uppercase }}" [routerLink]="['/companies']" [routerLinkActive]="['active-link']">
           <i class="fa fa-building app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.companies | uppercase }}</span>
+        </a>
+        <a class="app-nav-link" *ngIf="showLink('modules')" title="{{ tr?.modules | uppercase }}" [routerLink]="['/modules']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-briefcase app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.modules | uppercase }}</span>
+        </a>
+        <a class="app-nav-link" *ngIf="showLink('roles')" title="{{ tr?.roles | uppercase }}" [routerLink]="['/roles']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-cubes app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.roles | uppercase }}</span>
+        </a>
+        <a class="app-nav-link" *ngIf="showLink('users')" title="{{ tr?.users | uppercase }}" [routerLink]="['/users']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-users app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.users | uppercase }}</span>
+        </a>
+        <a class="app-nav-link" *ngIf="showLink('docs')" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">
+          <i class="fa fa-book app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">DOCS</span>
         </a>
 
         <div class="right-box">
@@ -39,7 +42,7 @@
           </div>
 
           <div class="dropdown lang-nav">
-              <a class="dropdown-toggle" title="{{ langTr }}" href="#" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='/assets/img/flags/{{lang}}.png' class="img-rounded lang-nav-img" /><span class="lang-nav-name">&nbsp;{{ langTr }}</span></a>
+              <a class="dropdown-toggle" title="{{ tr[lang] }}" href="#" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='/assets/img/flags/{{lang}}.png' class="img-rounded lang-nav-img" /><span class="lang-nav-name">&nbsp;{{ tr[lang] }}</span></a>
               <div class="dropdown-menu" aria-labelledby="langDropDown">
               <a [hidden]="lang=='en'" (click)="translation('en')" class="dropdown-item" title="{{ tr?.english }}" href="" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='/assets/img/flags/en.png' class="img-rounded lang-nav-img" /><span class="lang-nav-name">&nbsp;{{ tr?.english }}</span></a>
               <a [hidden]="lang=='cz'" (click)="translation('cz')" class="dropdown-item" title="{{ tr?.czech }}" href="" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='/assets/img/flags/cz.png' class="img-rounded lang-nav-img" /><span class="lang-nav-name">&nbsp;{{ tr?.czech }}</span></a>

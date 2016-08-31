@@ -59,15 +59,15 @@ export class RegisterComponent {
     
     let sendData = [this.model];
 
-    this._appRequest.postAction(this._apiUrl, sendData)
+    this._appRequest.postAction(`${this._apiUrl}/action/register`, sendData)
                     .subscribe((res: any) => {
-                        if (res.hasOwnProperty("regWarning")) {
-                          this.regAlerts.regWarning = this.tr[res.regWarning];
+                        if (res.hasOwnProperty("warning")) {
+                          this.regAlerts.warning = this.tr[res.warning];
                         }
 
-                        if (res.hasOwnProperty("regInfo")) {
-                          if (res.regInfo === 1) {
-                            this.regAlerts.regInfo = this.tr.userRegistered;
+                        if (res.hasOwnProperty("info")) {
+                          if (res.info === 1) {
+                            this.regAlerts.info = this.tr.userRegistered;
 
                             this.model = {
                               name: '',
@@ -80,8 +80,8 @@ export class RegisterComponent {
                             setTimeout(() => this.active = true, 0);
                           }
 
-                          if (res.regInfo === 0) {
-                            this.regAlerts.regWarning = this.tr.userRegistrationError;
+                          if (res.info === 0) {
+                            this.regAlerts.warning = this.tr.userRegistrationError;
                           }
                         }
                     },

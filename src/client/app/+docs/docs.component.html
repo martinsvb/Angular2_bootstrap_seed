@@ -1,10 +1,4 @@
-<div class="docs container-fluid">
-  <div class="row">
-      <div class="col-md-12">
-          <h1><i class="fa fa-book fa-lg"></i> API documentation</h1>
-      </div>
-  </div>
-
+<div class="container">
   <accordion *ngFor='let namespace of namespaces' [closeOthers]="true">
     <accordion-group *ngFor='let namespaceClass of docs[namespace]' [isOpen]="false">
 

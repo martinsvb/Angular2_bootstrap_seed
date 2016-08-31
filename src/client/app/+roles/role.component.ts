@@ -1,21 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AppConfig, AppRequest } from '../shared/index';
-import { CompanyModel } from './company.interface';
+import { RoleModel } from './role.interface';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   moduleId: module.id,
-  selector: 'company',
-  templateUrl: 'company.component.html',
+  selector: 'role',
+  templateUrl: 'role.component.html',
   directives: [AlertComponent],
   providers: [AppConfig, AppRequest]
 })
-export class CompanyComponent {
+export class RoleComponent {
   
-  private _apiUrl = "company";
+  private _apiUrl = "role";
   private _errorMessage: any;
 
   res: any;
@@ -24,11 +24,11 @@ export class CompanyComponent {
 
   alerts: any = {};
 
-  @Input() company: CompanyModel;
+  @Input() role: RoleModel;
   @Input() action: string;
-  companyBack: any;
+  roleBack: any;
 
-  @Output() compSubmit = new EventEmitter<string>();
+  @Output() roleSubmit = new EventEmitter<string>();
 
   constructor(
     private _tr: TranslationComponent,
@@ -37,7 +37,7 @@ export class CompanyComponent {
   ) {
     this.tr = _tr.getTranslation(_cache.getItem('lang'));
     
-    this.companyBack = this.company;
+    this.roleBack = this.role;
 
     _cache.dataAdded$.subscribe((data: any) => {
         if (data.hasOwnProperty('lang')) {
@@ -51,7 +51,7 @@ export class CompanyComponent {
    */
   onSubmit() {
       
-      let sendData = [this.company];
+      let sendData = [this.role];
       
       if (this.action == "create") {
         this._appRequest.postAction(this._apiUrl, sendData)
@@ -62,12 +62,12 @@ export class CompanyComponent {
 
                           if (res.hasOwnProperty("info")) {
                             if (res.info === 1) {
-                              this.compSubmit.emit(this.tr.companySaved);
+                              this.roleSubmit.emit(this.tr.roleSaved);
                             }
 
                             if (res.info === 0) {
-                              this.alerts.warning = this.tr.companyNotSaved;
-                              this.company = this.companyBack;
+                              this.alerts.warning = this.tr.roleNotSaved;
+                              this.role = this.roleBack;
                             }
                           }
                           
@@ -85,12 +85,12 @@ export class CompanyComponent {
 
                           if (res.hasOwnProperty("info")) {
                             if (res.info === 1) {
-                              this.alerts.info = this.tr.companyChanged;
+                              this.alerts.info = this.tr.roleChanged;
                             }
 
                             if (res.info === 0) {
-                              this.alerts.warning = this.tr.companyNotChanged;
-                              this.company = this.companyBack;
+                              this.alerts.warning = this.tr.roleNotChanged;
+                              this.role = this.roleBack;
                             }
                           }
                         },
@@ -100,11 +100,11 @@ export class CompanyComponent {
   }
 
   list() {
-    this.compSubmit.emit("list");
+    this.roleSubmit.emit("list");
   }
 
   /**
-   *  Close company alert
+   *  Close role alert
    */
   closeAlert(alert: string) {
     this.alerts[alert] = null;

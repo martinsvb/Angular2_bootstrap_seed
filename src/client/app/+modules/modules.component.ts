@@ -3,27 +3,29 @@ import { CORE_DIRECTIVES } from '@angular/common';
 import { AppConfig, AppRequest } from '../shared/index';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
-import { CompanyModel } from './company.interface';
-import { CompanyComponent } from './company.component';
+import { ModuleComponent } from './module.component';
+import { ModuleModel } from './module.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     moduleId: module.id,
-    selector: 'companies',
-    templateUrl: 'companies.component.html',
+    selector: 'modules',
+    templateUrl: 'modules.component.html',
     providers: [AppConfig, AppRequest],
-    directives: [CORE_DIRECTIVES, CompanyComponent, AlertComponent]
+    directives: [CORE_DIRECTIVES, ModuleComponent, AlertComponent]
 })
-export class CompaniesComponent {
+export class ModulesComponent {
   
-  private _apiUrl = "company";
+  private _apiUrl = "module";
   private _errorMessage: any;
 
   tr: any;
   alerts: any = {};
-  companies: Array<CompanyModel>;
-  selectedCompany: CompanyModel;
-  showCompany: boolean = false;
+  modules: Array<ModuleModel>;
+  roleList: Array<string>;
+  selectedModule: ModuleModel;
+  description: any = {};
+  showModule: boolean = false;
   action: string = "update";
   
   constructor(
@@ -39,63 +41,75 @@ export class CompaniesComponent {
         }
     });
 
-    this.getCompanies();
+    this.getModules();
   }
 
-  getCompanies() {
+  getModules() {
     this._appRequest.getAction(this._apiUrl)
-                .subscribe((res: Array<CompanyModel>) => {
+                .subscribe((res: Array<ModuleModel>) => {
                     if (res.length > 0) {
-                        this.companies = res;
+                        this.modules = res;
                     }
                 },
                 (error: any) => console.log(error)
                 );
   }
 
-  newCompany() {
-    this.selectedCompany = {
+  newModule() {
+    this.selectedModule = {
         id: 0,
         name: '',
-        ico: '',
-        email: '',
         active: false,
-        street: '',
-        street_nr: '',
-        state: '',
-        city: '',
-        zip: '',
-        phone: [],
+        description: '',
+        role: {},
         ts_created: 0
     };
-    this.showCompany = true;
+    this.showModule = true;
     this.action = "create";
   }
 
-  selectCompany(company: CompanyModel) {
-      this.selectedCompany = company;
-      this.showCompany = true;
-      this.action = "update";
+  selectModule(module: ModuleModel) {
+    if (!module.hasOwnProperty('role') || !module.role) {
+        module.role = {};
+    }
+    this.selectedModule = module;
+    this.showModule = true;
+    this.action = "update";
   }
 
-  compSubmit(event: string) {
+  moduleSubmit(event: string) {
     if (event !== "list") {
         this.alerts.info = event;
     }
-    this.showCompany = false;
-    this.getCompanies();
+    this.showModule = false;
+    this.getModules();
   }
 
   closeAlert(alert: string) {
     this.alerts[alert] = null;
   }
 
-  compChange(index: number) {
+  hideDescription(i: number) {
+      let result = true;
+      if (this.description.hasOwnProperty(i) && this.description[i] === true) {
+        result = false;
+      }
+
+      return result;
+  }
+
+  showDescriptionChange(i: number) {
+      this.description[i] = !this.description.hasOwnProperty(i)
+        ? true
+        : !this.description[i];
+  }
+
+  moduleChange(index: number) {
     
     let sendData = [{
-        id: this.companies[index].id,
-        email: this.companies[index].email,
-        active: !this.companies[index].active
+        id: this.modules[index].id,
+        name: this.modules[index].name,
+        active: !this.modules[index].active
     }];
 
     this._appRequest.putAction(this._apiUrl + '/action/toggleActive', sendData)
@@ -106,16 +120,16 @@ export class CompaniesComponent {
 
                         if (res.hasOwnProperty("info")) {
                             if (res.info === 1) {
-                                this.alerts.info = this.tr.companyChanged;
-                                this.companies[index].active = !this.companies[index].active;
+                                this.alerts.info = this.tr.moduleChanged;
+                                this.modules[index].active = !this.modules[index].active;
                             }
 
                             if (res.info === 0) {
-                                this.alerts.warning = this.tr.companyNotChanged;
+                                this.alerts.warning = this.tr.moduleNotChanged;
                             }
                         }
                     },
-                        (error: any) => this.companies[index].active = !this.companies[index].active
+                        (error: any) => this.modules[index].active = !this.modules[index].active
                     );
   }
 }

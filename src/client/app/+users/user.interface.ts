@@ -1,8 +1,11 @@
 /**
- *  Profile interface
+ *  User interface
  */
-export interface ProfileModel {
+export interface UserModel {
     
+    id: any;
+    comp_id?: number;
+    comp_name?: string;
     name: string;
     email: string;
     chpassword?: boolean;
@@ -11,5 +14,6 @@ export interface ProfileModel {
     newrepassword?: string;
     role: string;
     modules?: any;
-    active?: number;
+    active?: boolean;
+    ts_created?: number;
 }

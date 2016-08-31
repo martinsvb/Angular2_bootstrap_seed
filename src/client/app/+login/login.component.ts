@@ -15,7 +15,6 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   directives: [ROUTER_DIRECTIVES, AlertComponent],
   providers: [AppConfig, AppRequest]
 })
-
 export class LoginComponent {
   
   private _apiUrl = "login";
@@ -67,6 +66,7 @@ export class LoginComponent {
 
                         if (res.hasOwnProperty("loginInfo")) {
                           if (res.loginInfo === 1) {
+                            res.modules = JSON.parse(res.modules);
                             this._cache.setItem('user', res);
 
                             this._router.navigate(['/']);

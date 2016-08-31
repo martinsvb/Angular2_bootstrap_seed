@@ -23,7 +23,7 @@
             </div>
             <div class="col-sm-12 col-md-4">
                 <label for="email">{{ tr?.email }}</label>
-                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="company.email" #email="ngModel" placeholder="{{ tr?.email }}" pattern="([A-Za-z0-9]|-|_)+@[A-Za-z]+\.[A-Za-z]{2,}" required [disabled]="action=='update'" />
+                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="company.email" #email="ngModel" placeholder="{{ tr?.email }}" pattern="([A-Za-z0-9]|-|_)+@[A-Za-z]+\.[A-Za-z]{2,}" required />
                 <div [hidden]="email.pristine" *ngIf="email.errors" class="alert alert-danger w-100">
                     <p *ngIf="email.errors.required">{{ tr?.requiredTence("email") }}</p>
                     <p *ngIf="email.errors.pattern">{{ tr?.patternTence("email") }}</p>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-6 col-md-2">
                 <label for="ico" title="{{ tr?.ico_title }}">{{ tr?.ico }}</label>
-                <input type="text" class="form-control" id="ico" name="ico" [(ngModel)]="company.ico" #ico="ngModel" placeholder="{{ tr?.ico }}" [disabled]="action=='update'" />
+                <input type="text" class="form-control" id="ico" name="ico" [(ngModel)]="company.ico" #ico="ngModel" placeholder="{{ tr?.ico }}" />
             </div>
             <div class="col-sm-6 col-md-2">
                 <label>&nbsp;</label>
@@ -52,14 +52,14 @@
             </div>
             <div class="col-xs-12 col-sm-4">
                 <label for="street_nr">{{ tr?.street_nr }}</label>
-                <input type="text" class="form-control" id="street_nr" name="street_nr" [ngModel]="company.street_nr" #street_nr="ngModel" placeholder="{{ tr?.street_nr }}" />
+                <input type="text" class="form-control" id="street_nr" name="street_nr" [(ngModel)]="company.street_nr" #street_nr="ngModel" placeholder="{{ tr?.street_nr }}" />
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-xs-12 col-sm-4">
                 <label for="state">{{ tr?.state }}</label>
-                <input type="text" class="form-control" id="state" name="state" [ngModel]="company.state" #state="ngModel" placeholder="{{ tr?.state }}" />
+                <input type="text" class="form-control" id="state" name="state" [(ngModel)]="company.state" #state="ngModel" placeholder="{{ tr?.state }}" />
             </div>
             <div class="col-xs-12 col-sm-4">
                 <label for="city">{{ tr?.city }}</label>
@@ -67,7 +67,14 @@
             </div>
             <div class="col-xs-12 col-sm-4">
                 <label for="zip">{{ tr?.zip }}</label>
-                <input type="text" class="form-control" id="zip" name="zip" [ngModel]="company.zip" #zip="ngModel" placeholder="{{ tr?.zip }}" />
+                <input type="text" class="form-control" id="zip" name="zip" [(ngModel)]="company.zip" #zip="ngModel" placeholder="{{ tr?.zip }}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-12 col-sm-4">
+                <label for="phone">{{ tr?.phone }}</label>
+                <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="company.phone[0]" #phone="ngModel" placeholder="{{ tr?.phone }}" />
             </div>
         </div>
 

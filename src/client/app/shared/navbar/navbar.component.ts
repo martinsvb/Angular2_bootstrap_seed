@@ -27,17 +27,19 @@ export class NavbarComponent {
     ) {
         this.lang = _cache.getItem('lang') || "en";
         this.tr = _tr.getTranslation(this.lang);
-        this.langTr = this.tr[this.lang];
         _cache.dataAdded$.subscribe((data: any) => {
             if (data.hasOwnProperty('user')) {
                 this.user = data['user'];
             }
             if (data.hasOwnProperty('lang')) {
-                this.lang = data.lang || "en";
+                this.lang = data.lang || this.lang;
                 this.tr = _tr.getTranslation(this.lang);
-                this.langTr = this.tr[this.lang];
             }
         });
+    }
+
+    showLink(link: string) {
+        return this.user.modules.hasOwnProperty(link);
     }
 
     logout() {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AppConfig, AppRequest } from '../shared/index';
-import { ProfileModel } from './profile.interface';
+import { UserModel } from '../+users/user.interface';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
@@ -13,7 +13,6 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   directives: [AlertComponent],
   providers: [AppConfig, AppRequest]
 })
-
 export class ProfileComponent {
   
   private _apiUrl = "user";
@@ -24,7 +23,7 @@ export class ProfileComponent {
 
   alerts: any = {};
 
-  model: ProfileModel;
+  model: UserModel;
   userBack: any;
 
   constructor(
@@ -75,16 +74,16 @@ export class ProfileComponent {
 
       this._appRequest.putAction(this._apiUrl, sendData)
                       .subscribe((res: any) => {
-                        if (res.hasOwnProperty("profileWarning")) {
-                          this.alerts.warning = this.tr[res.profileWarning];
+                        if (res.hasOwnProperty("warning")) {
+                          this.alerts.warning = this.tr[res.warning];
                         }
 
-                        if (res.hasOwnProperty("profileInfo")) {
-                          if (res.profileInfo === 1) {
+                        if (res.hasOwnProperty("info")) {
+                          if (res.info === 1) {
                             this.alerts.info = this.tr.profileChanged;
                           }
 
-                          if (res.profileInfo === 0) {
+                          if (res.info === 0) {
                             this.alerts.warning = this.tr.profileNotChanged;
                             this.model = this.userBack;
                           }

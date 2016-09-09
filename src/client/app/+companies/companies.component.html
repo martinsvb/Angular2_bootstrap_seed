@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="showLink('companies')">
     <div class="row">
         <div class="col-md-12">
             <button [hidden]="showCompany" class="btn btn-success pull-right" (click)="newCompany()"><i class="fa fa-plus"></i> {{ tr?.create }}</button>

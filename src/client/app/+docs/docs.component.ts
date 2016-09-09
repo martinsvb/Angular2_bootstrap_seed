@@ -4,6 +4,7 @@ import { FORM_DIRECTIVES } from '@angular/forms';
 import * as moment from 'moment';
 import { DocsService } from './docs.service';
 import { AppConfig } from '../shared/index';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { AlertComponent, ACCORDION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
@@ -11,7 +12,7 @@ import { AlertComponent, ACCORDION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstra
   selector: 'sd-docs',
   directives: [AlertComponent, ACCORDION_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
   templateUrl: 'docs.component.html',
-  providers: [AppConfig, DocsService]
+  providers: [AppConfig, DocsService, NavbarComponent]
 })
 
 export class DocsComponent {
@@ -19,7 +20,7 @@ export class DocsComponent {
   error: any;
   namespaces: any;
 
-  constructor(private DocsService: DocsService) {}
+  constructor(private DocsService: DocsService, private _nav: NavbarComponent) {}
 
   getDocs() {
     this.DocsService
@@ -34,4 +35,8 @@ export class DocsComponent {
   ngOnInit() {
     this.getDocs();
   }
+
+    showLink(link: string) {
+        return this._nav.showLink(link);
+    }
 }

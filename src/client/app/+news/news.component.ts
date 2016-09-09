@@ -4,6 +4,7 @@ import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
 import { Ng2Uploader } from './ng2-uploader';
 import { AppConfig, AppRequest } from '../shared/index';
 import { CacheComponent } from '../shared/cache/cache.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { NewModel } from './news.interface';
 import { TranslationComponent } from '../shared/translation/translation.component';
 
@@ -12,7 +13,7 @@ import { TranslationComponent } from '../shared/translation/translation.componen
   selector: 'sd-news',
   templateUrl: 'news.component.html',
   directives: [Ng2Summernote, Ng2Uploader],
-  providers: [AppConfig, AppRequest]
+  providers: [AppConfig, AppRequest, NavbarComponent]
 })
 
 export class NewsComponent {
@@ -36,7 +37,8 @@ export class NewsComponent {
     private _appConfig: AppConfig,
     private _cache: CacheComponent,
     private _tr: TranslationComponent,
-    private _appRequest: AppRequest
+    private _appRequest: AppRequest,
+    private _nav: NavbarComponent
   ) {
     this.hostUpload = _appConfig.hostUpload;
     this.uploadFolder = "test_company/news";
@@ -139,5 +141,9 @@ export class NewsComponent {
                           (res: any) => this.res = res,
                           (error: any) =>  this._errorMessage = error
                         );
+    }
+
+    showLink(link: string) {
+        return this._nav.showLink(link);
     }
 }

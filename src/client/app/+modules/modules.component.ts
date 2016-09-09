@@ -3,6 +3,7 @@ import { CORE_DIRECTIVES } from '@angular/common';
 import { AppConfig, AppRequest } from '../shared/index';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { ModuleComponent } from './module.component';
 import { ModuleModel } from './module.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
@@ -11,7 +12,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
     moduleId: module.id,
     selector: 'modules',
     templateUrl: 'modules.component.html',
-    providers: [AppConfig, AppRequest],
+    providers: [AppConfig, AppRequest, NavbarComponent],
     directives: [CORE_DIRECTIVES, ModuleComponent, AlertComponent]
 })
 export class ModulesComponent {
@@ -31,7 +32,8 @@ export class ModulesComponent {
   constructor(
     private _tr: TranslationComponent,
     private _cache: CacheComponent,
-    private _appRequest: AppRequest
+    private _appRequest: AppRequest,
+    private _nav: NavbarComponent
   ) {
     this.tr = _tr.getTranslation(_cache.getItem('lang'));
 
@@ -132,4 +134,8 @@ export class ModulesComponent {
                         (error: any) => this.modules[index].active = !this.modules[index].active
                     );
   }
+
+    showLink(link: string) {
+        return this._nav.showLink(link);
+    }
 }

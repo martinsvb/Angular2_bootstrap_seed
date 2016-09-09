@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="showLink('modules')">
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ action=='update' ? tr?.edit : tr?.newF }} {{ tr?.module }}</h2>
@@ -25,7 +25,7 @@
                 <p>{{ tr?.role }}</p>
                 <div class="form-check pull-left" *ngFor="let role of roles; let i = index">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" name="{{ module.role[role.name] }}" [(ngModel)]="module.role[role.name]" [checked]="module.role[role.name] === true"><span class="form-check-span">{{ role.name }}</span>
+                        <input class="form-check-input" type="checkbox" name="role.{{ role.name }}" [(ngModel)]="module.role[role.name]"><span class="form-check-span">{{ role.name }}</span>
                     </label>
                 </div>
             </div>

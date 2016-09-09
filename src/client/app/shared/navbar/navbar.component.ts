@@ -26,6 +26,7 @@ export class NavbarComponent {
         private _router: Router
     ) {
         this.lang = _cache.getItem('lang') || "en";
+        this.user = _cache.getItem('user');
         this.tr = _tr.getTranslation(this.lang);
         _cache.dataAdded$.subscribe((data: any) => {
             if (data.hasOwnProperty('user')) {

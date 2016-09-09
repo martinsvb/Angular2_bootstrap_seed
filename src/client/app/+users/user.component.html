@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="showLink('users')">
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ action=='update' ? tr?.edit : tr?.newF }} {{ tr?.user }}</h2>
@@ -59,15 +59,15 @@
                 <div *ngIf="loggedUser.modules[module.name]">
                     <h4 class="blockEl">{{ module.name }}</h4>
                     <div class="btn-group">
-                        <label class="btn btn-primary" name="modules" [(ngModel)]="user.modules[module.name].read" #user.modules="ngModel" btnCheckbox>
+                        <label class="btn btn-primary" name="modules.{{ module.name }}" [(ngModel)]="user.modules[module.name].read" #user.modules="ngModel" btnCheckbox>
                             {{ tr?.read }} 
                             <i class="fa fa-check" [ngClass]="{'fa-check': user.modules[module.name].read, 'fa-close': !user.modules[module.name].read}" aria-hidden="true"></i>
                         </label>
-                        <label class="btn btn-primary" name="modules" [(ngModel)]="user.modules[module.name].write" #user.modules="ngModel" btnCheckbox>
+                        <label class="btn btn-primary" name="modules.{{ module.name }}" [(ngModel)]="user.modules[module.name].write" #user.modules="ngModel" btnCheckbox>
                             {{ tr?.write }} 
                             <i class="fa fa-check" [ngClass]="{'fa-check': user.modules[module.name].write, 'fa-close': !user.modules[module.name].write}" aria-hidden="true"></i>
                         </label>
-                        <label class="btn btn-primary" name="modules" [(ngModel)]="user.modules[module.name].del" #user.modules="ngModel" btnCheckbox>
+                        <label class="btn btn-primary" name="modules.{{ module.name }}" [(ngModel)]="user.modules[module.name].del" #user.modules="ngModel" btnCheckbox>
                             {{ tr?.del }} 
                             <i class="fa fa-check" [ngClass]="{'fa-check': user.modules[module.name].del, 'fa-close': !user.modules[module.name].del}" aria-hidden="true"></i>
                         </label>
@@ -75,7 +75,8 @@
                 </div>
             </div>
         </div>
-
+<p>{{loggedUser.modules | json}}</p>
+<p>{{modules | json}}</p>
         <hr />
         
         <h3>{{ tr?.password }}</h3>

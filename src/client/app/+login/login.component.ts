@@ -66,7 +66,6 @@ export class LoginComponent {
 
                         if (res.hasOwnProperty("loginInfo")) {
                           if (res.loginInfo === 1) {
-                            res.modules = JSON.parse(res.modules);
                             this._cache.setItem('user', res);
 
                             this._router.navigate(['/']);

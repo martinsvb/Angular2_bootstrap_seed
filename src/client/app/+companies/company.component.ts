@@ -4,6 +4,7 @@ import { AppConfig, AppRequest } from '../shared/index';
 import { CompanyModel } from './company.interface';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
@@ -11,7 +12,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'company',
   templateUrl: 'company.component.html',
   directives: [AlertComponent],
-  providers: [AppConfig, AppRequest]
+  providers: [AppConfig, AppRequest, NavbarComponent]
 })
 export class CompanyComponent {
   
@@ -33,7 +34,8 @@ export class CompanyComponent {
   constructor(
     private _tr: TranslationComponent,
     private _cache: CacheComponent,
-    private _appRequest: AppRequest
+    private _appRequest: AppRequest,
+    private _nav: NavbarComponent
   ) {
     this.tr = _tr.getTranslation(_cache.getItem('lang'));
     
@@ -109,4 +111,8 @@ export class CompanyComponent {
   closeAlert(alert: string) {
     this.alerts[alert] = null;
   }
+
+    showLink(link: string) {
+        return this._nav.showLink(link);
+    }
 }

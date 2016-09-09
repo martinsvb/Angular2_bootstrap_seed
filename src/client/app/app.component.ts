@@ -20,10 +20,12 @@ export class AppComponent {
   constructor (
     private _cache: CacheComponent
   ) {
-    _cache.setItem('user', {
-      name: 'guest',
-      role: 'guest',
-      modules: {}
-    });
+    if (!_cache.getItem('user')) {
+      _cache.setItem('user', {
+        name: 'guest',
+        role: 'guest',
+        modules: {}
+      });
+    }
   }
 }

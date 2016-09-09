@@ -3,6 +3,7 @@ import { CORE_DIRECTIVES } from '@angular/common';
 import { AppConfig, AppRequest } from '../shared/index';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { UserComponent } from './user.component';
 import { UserModel } from './user.interface';
 import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
@@ -11,7 +12,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
     moduleId: module.id,
     selector: 'users',
     templateUrl: 'users.component.html',
-    providers: [AppConfig, AppRequest],
+    providers: [AppConfig, AppRequest, NavbarComponent],
     directives: [CORE_DIRECTIVES, UserComponent, AlertComponent]
 })
 export class UsersComponent {
@@ -30,7 +31,8 @@ export class UsersComponent {
   constructor(
     private _tr: TranslationComponent,
     private _cache: CacheComponent,
-    private _appRequest: AppRequest
+    private _appRequest: AppRequest,
+    private _nav: NavbarComponent
   ) {
     this.tr = _tr.getTranslation(_cache.getItem('lang'));
 
@@ -138,4 +140,8 @@ export class UsersComponent {
                         (error: any) => this.users[index].active = !this.users[index].active
                     );
   }
+
+    showLink(link: string) {
+        return this._nav.showLink(link);
+    }
 }

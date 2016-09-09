@@ -7,21 +7,29 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class CacheComponent {
     
+    private ls = window.localStorage;
     private _subject = new BehaviorSubject<any>(0);
     dataAdded$ = this._subject.asObservable();
 
-    private _data: any = {};
+    setItem(key: string, value: any) {
+        let data: any = this.ls.getItem('data');
+        
+        data = data ? JSON.parse(data) : {};
+        data[key] = value;
 
-    setItem(key: string, data: any) {
-        this._data[key] = data;
-        this._subject.next(this._data);
+        this.ls.setItem('data', JSON.stringify(data));
+        this._subject.next(data);
     }
 
     getItem(key: string) {
         let result: any;
+        let data: any = this.ls.getItem('data');
 
-        if (this._data.hasOwnProperty(key)) {
-            result = this._data[key];
+        if (data) {
+            data = JSON.parse(data);
+            if (data.hasOwnProperty(key)) {
+                result = data[key];
+            }
         }
 
         return result;

@@ -23,6 +23,7 @@ export class AppComponent {
     if (!_cache.getItem('user')) {
       _cache.setItem('user', {
         name: 'guest',
+        email: 'guest@guest.cz',
         role: 'guest',
         modules: {}
       });

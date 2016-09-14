@@ -25,16 +25,17 @@ export class NavbarComponent {
         private _cache: CacheComponent,
         private _router: Router
     ) {
-        this.lang = _cache.getItem('lang') || "en";
-        this.user = _cache.getItem('user');
-        this.tr = _tr.getTranslation(this.lang);
-        _cache.dataAdded$.subscribe((data: any) => {
+        this.lang = this._cache.getItem('lang') || "en";
+        this.user = this._cache.getItem('user');
+        this.tr = this._tr.getTranslation(this.lang);
+        
+        this._cache.dataAdded$.subscribe((data: any) => {
             if (data.hasOwnProperty('user')) {
                 this.user = data['user'];
             }
             if (data.hasOwnProperty('lang')) {
                 this.lang = data.lang || this.lang;
-                this.tr = _tr.getTranslation(this.lang);
+                this.tr = this._tr.getTranslation(this.lang);
             }
         });
     }
@@ -46,6 +47,7 @@ export class NavbarComponent {
     logout() {
         this.user = {
             name: 'guest',
+            email: 'guest@guest.cz',
             role: 'guest',
             modules: {}
         };

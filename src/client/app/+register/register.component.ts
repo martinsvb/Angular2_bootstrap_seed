@@ -17,7 +17,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 export class RegisterComponent {
   
-  private _apiUrl = "user";
+  private _apiUrl = "register";
   private _errorMessage: any;
 
   tr: any;
@@ -59,7 +59,7 @@ export class RegisterComponent {
     
     let sendData = [this.model];
 
-    this._appRequest.postAction(`${this._apiUrl}/action/register`, sendData)
+    this._appRequest.postAction(this._apiUrl, sendData)
                     .subscribe((res: any) => {
                         if (res.hasOwnProperty("warning")) {
                           this.regAlerts.warning = this.tr[res.warning];

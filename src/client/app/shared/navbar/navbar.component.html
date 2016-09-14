@@ -8,16 +8,16 @@
         <a class="app-nav-link" *ngIf="showLink('news')" title="{{ tr?.news | uppercase }}" [routerLink]="['/news']" [routerLinkActive]="['active-link']">
           <i class="fa fa-edit app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.news | uppercase }}</span>
         </a>
-        <a class="app-nav-link" *ngIf="showLink('companies')" title="{{ tr?.companies | uppercase }}" [routerLink]="['/companies']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('company')" title="{{ tr?.companies | uppercase }}" [routerLink]="['/companies']" [routerLinkActive]="['active-link']">
           <i class="fa fa-building app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.companies | uppercase }}</span>
         </a>
-        <a class="app-nav-link" *ngIf="showLink('modules')" title="{{ tr?.modules | uppercase }}" [routerLink]="['/modules']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('module')" title="{{ tr?.modules | uppercase }}" [routerLink]="['/modules']" [routerLinkActive]="['active-link']">
           <i class="fa fa-briefcase app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.modules | uppercase }}</span>
         </a>
-        <a class="app-nav-link" *ngIf="showLink('roles')" title="{{ tr?.roles | uppercase }}" [routerLink]="['/roles']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('role')" title="{{ tr?.roles | uppercase }}" [routerLink]="['/roles']" [routerLinkActive]="['active-link']">
           <i class="fa fa-cubes app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.roles | uppercase }}</span>
         </a>
-        <a class="app-nav-link" *ngIf="showLink('users')" title="{{ tr?.users | uppercase }}" [routerLink]="['/users']" [routerLinkActive]="['active-link']">
+        <a class="app-nav-link" *ngIf="showLink('user')" title="{{ tr?.users | uppercase }}" [routerLink]="['/users']" [routerLinkActive]="['active-link']">
           <i class="fa fa-users app-nav-link-ico" aria-hidden="true"></i><span class="app-nav-link-text">{{ tr?.users | uppercase }}</span>
         </a>
         <a class="app-nav-link" *ngIf="showLink('docs')" title="docs" [routerLink]="['/docs']" [routerLinkActive]="['active-link']">

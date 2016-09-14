@@ -22,6 +22,7 @@ export class HomeComponent {
         private _cache: CacheComponent
     ) {
         this.tr = _tr.getTranslation(_cache.getItem('lang'));
+        this.user = this._cache.getItem('user');
         _cache.dataAdded$.subscribe((data: any) => {
             if (data.hasOwnProperty('user')) {
                 this.user = data['user'];

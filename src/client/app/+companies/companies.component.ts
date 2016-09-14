@@ -21,6 +21,7 @@ export class CompaniesComponent {
   private _errorMessage: any;
 
   tr: any;
+  user: any;
   alerts: any = {};
   companies: Array<CompanyModel>;
   selectedCompany: CompanyModel;
@@ -34,10 +35,14 @@ export class CompaniesComponent {
     private _nav: NavbarComponent
   ) {
     this.tr = _tr.getTranslation(_cache.getItem('lang'));
+    this.user = _cache.getItem('user');
 
     _cache.dataAdded$.subscribe((data: any) => {
         if (data.hasOwnProperty('lang')) {
           this.tr = _tr.getTranslation(data['lang']);
+        }
+        if (data.hasOwnProperty('user')) {
+            this.user = data['user'];
         }
     });
 
@@ -94,11 +99,13 @@ export class CompaniesComponent {
 
   compChange(index: number) {
     
-    let sendData = [{
-        id: this.companies[index].id,
-        email: this.companies[index].email,
-        active: !this.companies[index].active
-    }];
+    let sendData = [
+        {
+            id: this.companies[index].id,
+            email: this.companies[index].email,
+            active: !this.companies[index].active
+        }
+    ];
 
     this._appRequest.putAction(this._apiUrl + '/action/toggleActive', sendData)
                     .subscribe((res: any) => {

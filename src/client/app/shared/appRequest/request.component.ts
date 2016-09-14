@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { AppConfig } from '../appConfig/index';
+import { CacheComponent } from '../cache/cache.component';
 
 @Injectable()
 @Component({
@@ -14,6 +15,8 @@ import { AppConfig } from '../appConfig/index';
 })
 export class AppRequest {
     
+    user: any;
+
     private _headers = new Headers({
         'accept': '*/*',
         'content-Type': 'application/json'
@@ -23,15 +26,24 @@ export class AppRequest {
 
     constructor(
         private _http: Http,
-        private _appConfig: AppConfig
-    ) {}
+        private _appConfig: AppConfig,
+        private _cache: CacheComponent
+    ) {
+        this.user = this._cache.getItem('user');
+        
+        this._cache.dataAdded$.subscribe((data: any) => {
+            if (data.hasOwnProperty('user')) {
+                this.user = data['user'];
+            }
+        });
+    }
 
     /**
      *  Retrieve data from API
      */
     getAction (url: string): Observable<any[]> {
         
-        return this._http.get(this._appConfig.hostApi + url)
+        return this._http.get(`${this._appConfig.hostApi}${url}/user/${this.user.email}`)
                     .map(this._extractData)
                     .catch(this._handleError);
     }
@@ -41,7 +53,7 @@ export class AppRequest {
      */
     deleteAction (url: string): Observable<any[]> {
         
-        return this._http.delete(this._appConfig.hostApi + url)
+        return this._http.delete(`${this._appConfig.hostApi}${url}/user/${this.user.email}`)
                     .map(this._extractData)
                     .catch(this._handleError);
     }
@@ -52,7 +64,7 @@ export class AppRequest {
     postAction (url: string, data: any): Observable<any> {
         let body = JSON.stringify(data);
 
-        return this._http.post(this._appConfig.hostApi + url, body, this._options)
+        return this._http.post(`${this._appConfig.hostApi}${url}/user/${this.user.email}`, body, this._options)
                         .map(this._extractData)
                         .catch(this._handleError);
     }
@@ -63,7 +75,7 @@ export class AppRequest {
     putAction (url: string, data: any): Observable<any> {
         let body = JSON.stringify(data);
 
-        return this._http.put(this._appConfig.hostApi + url, body, this._options)
+        return this._http.put(`${this._appConfig.hostApi}${url}/user/${this.user.email}`, body, this._options)
                         .map(this._extractData)
                         .catch(this._handleError);
     }
@@ -73,7 +85,7 @@ export class AppRequest {
      */
     getActionPr (url: string): Promise<any[]> {
         
-        return this._http.get(this._appConfig.hostApi + url)
+        return this._http.get(`${this._appConfig.hostApi}${url}/user/${this.user.email}`)
                     .toPromise()
                     .then(this._extractData)
                     .catch(this._handleError);
@@ -84,7 +96,7 @@ export class AppRequest {
      */
     deleteActionPr (url: string): Promise<any[]> {
         
-        return this._http.delete(this._appConfig.hostApi + url)
+        return this._http.delete(`${this._appConfig.hostApi}${url}/user/${this.user.email}`)
                     .toPromise()
                     .then(this._extractData)
                     .catch(this._handleError);
@@ -96,7 +108,7 @@ export class AppRequest {
     postActionPr (url: string, data: any): Promise<any> {
         let body = JSON.stringify(data);
 
-        return this._http.post(this._appConfig.hostApi + url, body, this._options)
+        return this._http.post(`${this._appConfig.hostApi}${url}/user/${this.user.email}`, body, this._options)
                         .toPromise()
                         .then(this._extractData)
                         .catch(this._handleError);
@@ -108,7 +120,7 @@ export class AppRequest {
     putActionPr (url: string, data: any): Promise<any> {
         let body = JSON.stringify(data);
 
-        return this._http.put(this._appConfig.hostApi + url, body, this._options)
+        return this._http.put(`${this._appConfig.hostApi}${url}/user/${this.user.email}`, body, this._options)
                         .toPromise()
                         .then(this._extractData)
                         .catch(this._handleError);

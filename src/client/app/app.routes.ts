@@ -1,4 +1,4 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { HomeRoutes } from './+home/index';
 import { DocsRoutes } from './+docs/index';
@@ -11,7 +11,7 @@ import { ModulesRoutes } from './+modules/index';
 import { UsersRoutes } from './+users/index';
 import { RolesRoutes } from './+roles/index';
 
-const routes: RouterConfig = [
+export const routes: Routes = [
   ...HomeRoutes,
   ...DocsRoutes,
   ...NewsRoutes,
@@ -22,8 +22,4 @@ const routes: RouterConfig = [
   ...ModulesRoutes,
   ...UsersRoutes,
   ...RolesRoutes
-];
-
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes),
 ];

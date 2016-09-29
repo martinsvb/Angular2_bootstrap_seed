@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { TranslationComponent } from '../shared/translation/translation.component';
 import { CacheComponent } from '../shared/cache/cache.component';
 
@@ -9,8 +8,7 @@ import { CacheComponent } from '../shared/cache/cache.component';
 @Component({
   moduleId: module.id,
   selector: 'sd-home',
-  templateUrl: 'home.component.html',
-  directives: [ROUTER_DIRECTIVES]
+  templateUrl: 'home.component.html'
 })
 export class HomeComponent {
 

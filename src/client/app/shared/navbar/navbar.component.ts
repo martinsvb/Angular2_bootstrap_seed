@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslationComponent } from '../translation/translation.component';
 import { CacheComponent } from '../cache/cache.component';
 
@@ -9,8 +9,7 @@ import { CacheComponent } from '../cache/cache.component';
 @Component({
   moduleId: module.id,
   selector: 'sd-navbar',
-  templateUrl: 'navbar.component.html',
-  directives: [ROUTER_DIRECTIVES]
+  templateUrl: 'navbar.component.html'
 })
 
 export class NavbarComponent {

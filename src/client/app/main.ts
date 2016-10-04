@@ -1,14 +1,11 @@
+/**
+ * Bootstraps the application and makes the ROUTER_PROVIDERS and the APP_BASE_HREF available to it.
+ * @see https://angular.io/docs/ts/latest/api/platform-browser-dynamic/index/bootstrap-function.html
+ */
 import { enableProdMode } from '@angular/core';
-import { APP_BASE_HREF } from '@angular/common';
-import { Http } from '@angular/http';
-
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-// The app module
-import { AppModule } from './app.module';;
-
-import { AppComponent } from './app.component';
-
+import { AppModule } from './app.module';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 

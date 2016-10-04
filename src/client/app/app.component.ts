@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
 import { NavbarComponent } from './shared/index';
 import { CacheComponent } from './shared/cache/cache.component';
 
@@ -11,9 +9,7 @@ import { CacheComponent } from './shared/cache/cache.component';
 @Component({
   moduleId: module.id,
   selector: 'sd-app',
-  viewProviders: [HTTP_PROVIDERS],
-  templateUrl: 'app.component.html',
-  directives: [ROUTER_DIRECTIVES, NavbarComponent]
+  templateUrl: 'app.component.html'
 })
 export class AppComponent {
 
